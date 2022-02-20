@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D39175A027BA307300A0C84F /* soulprovider_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391759027BA307300A0C84F /* soulprovider_iosApp.swift */; };
-		D39175A127BA307300A0C84F /* soulprovider_iosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391759027BA307300A0C84F /* soulprovider_iosApp.swift */; };
-		D39175A227BA307300A0C84F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391759127BA307300A0C84F /* ContentView.swift */; };
-		D39175A327BA307300A0C84F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D391759127BA307300A0C84F /* ContentView.swift */; };
+		D33FEC8F27BA54E600154E7A /* SPLogoRounded.png in Resources */ = {isa = PBXBuildFile; fileRef = D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */; };
+		D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */; };
 		D39175A427BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175A527BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
+		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
+		D39175B927BA32BD00A0C84F /* RadioMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B827BA32BD00A0C84F /* RadioMetadata.swift */; };
+		D39175BB27BA32D000A0C84F /* RadioMetadataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */; };
+		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
+		D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D3B94F5927C2ADA100BFB119 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D391759027BA307300A0C84F /* soulprovider_iosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = soulprovider_iosApp.swift; sourceTree = "<group>"; };
-		D391759127BA307300A0C84F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SPLogoRounded.png; sourceTree = "<group>"; };
+		D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayer.swift; sourceTree = "<group>"; };
 		D391759227BA307300A0C84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D391759727BA307300A0C84F /* soulprovider-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "soulprovider-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D391759D27BA307300A0C84F /* soulprovider-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "soulprovider-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D391759F27BA307300A0C84F /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		D39175B627BA329C00A0C84F /* SoulProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulProvider.swift; sourceTree = "<group>"; };
+		D39175B827BA32BD00A0C84F /* RadioMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadata.swift; sourceTree = "<group>"; };
+		D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataFetcher.swift; sourceTree = "<group>"; };
+		D39175BC27BA32DD00A0C84F /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
+		D3B94F5927C2ADA100BFB119 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +53,13 @@
 		D391758A27BA307300A0C84F = {
 			isa = PBXGroup;
 			children = (
+				D3B94F5927C2ADA100BFB119 /* .gitignore */,
+				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
+				D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */,
+				D39175BC27BA32DD00A0C84F /* RadioView.swift */,
+				D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */,
+				D39175B827BA32BD00A0C84F /* RadioMetadata.swift */,
+				D39175B627BA329C00A0C84F /* SoulProvider.swift */,
 				D391758F27BA307300A0C84F /* Shared */,
 				D391759E27BA307300A0C84F /* macOS */,
 				D391759827BA307300A0C84F /* Products */,
@@ -54,8 +69,6 @@
 		D391758F27BA307300A0C84F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				D391759027BA307300A0C84F /* soulprovider_iosApp.swift */,
-				D391759127BA307300A0C84F /* ContentView.swift */,
 				D391759227BA307300A0C84F /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -158,6 +171,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D39175A427BA307300A0C84F /* Assets.xcassets in Resources */,
+				D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */,
+				D33FEC8F27BA54E600154E7A /* SPLogoRounded.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,8 +191,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D39175A227BA307300A0C84F /* ContentView.swift in Sources */,
-				D39175A027BA307300A0C84F /* soulprovider_iosApp.swift in Sources */,
+				D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */,
+				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
+				D39175B927BA32BD00A0C84F /* RadioMetadata.swift in Sources */,
+				D39175BB27BA32D000A0C84F /* RadioMetadataFetcher.swift in Sources */,
+				D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +203,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D39175A327BA307300A0C84F /* ContentView.swift in Sources */,
-				D39175A127BA307300A0C84F /* soulprovider_iosApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +327,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JWK97SJQ3V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -341,6 +358,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = JWK97SJQ3V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
