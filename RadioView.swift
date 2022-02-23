@@ -49,10 +49,15 @@ struct RadioMetadataView: View {
 struct RadioProgressView: View {
     var duration: Double
     var startedAt: String
+    var status: RadioPlayerStatus
+
+    @State private var elapsed = 0.0
 
     let progressTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
-    @State private var elapsed = 0.0
+    var progressBarColour: Color {
+        return status == RadioPlayerStatus.playing ? .blue : .gray
+    }
 
     func getProgress() -> Double { min(1, Double(elapsed) / Double(duration)) }
 
@@ -67,9 +72,9 @@ struct RadioProgressView: View {
     }
 
     var body: some View {
-        
         VStack {
             ProgressView(value: getProgress())
+                .progressViewStyle(LinearProgressViewStyle(tint: progressBarColour))
                 .onReceive(progressTimer) { _ in handleProgressTimer() }
             HStack {
                 Text("\(secondsToTime(s: elapsed))")
@@ -85,6 +90,11 @@ struct RadioProgressView: View {
 struct RadioView: View {
     @EnvironmentObject private var fetcher: RadioMetadataFetcher
     @EnvironmentObject private var player: RadioPlayer
+    @Environment(\.colorScheme) var colorScheme
+    
+    var buttonIcon: String {
+        return player.status == RadioPlayerStatus.stopped ? "play.fill" : "pause.fill"
+    }
 
     func handleListenClick() -> Void {
         if player.status == RadioPlayerStatus.stopped {
@@ -92,29 +102,37 @@ struct RadioView: View {
         } else {
             player.stop()
         }
+        vibrate()
+    }
+
+    func vibrate() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 
     var body: some View {
         VStack {
-            if let radioMetadata = fetcher.radioMetadata {
+            if let radioMetadata = fetcher.radioMetadata, let status = player.status {
                 HeaderView
                 Spacer()
                 RadioMetadataView(radioMetadata: radioMetadata)
-                RadioProgressView(duration: radioMetadata.duration, startedAt: radioMetadata.started_at)
+                RadioProgressView(duration: radioMetadata.duration, startedAt: radioMetadata.started_at, status: status)
                 Spacer()
                 ZStack {
                     Button {
                         handleListenClick()
+                        vibrate()
                     } label: {
-                        Image(systemName: player.status == RadioPlayerStatus.stopped ? "play.fill" : "pause.fill")
+                        Image(systemName: buttonIcon)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 35, height: 35)
                             .padding()
-                    }.foregroundColor(.black)
+                    }
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                 }
             } else {
-                ProgressView()
+                ProgressView("Calibrating funk levels...")
             }
         }
         .padding()
