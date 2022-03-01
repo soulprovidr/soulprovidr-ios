@@ -12,7 +12,6 @@
 		D39175A427BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175A527BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
-		D39175BB27BA32D000A0C84F /* RadioMetadataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */; };
 		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
 		D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D3B94F5927C2ADA100BFB119 /* .gitignore */; };
 /* End PBXBuildFile section */
@@ -23,9 +22,7 @@
 		D391759227BA307300A0C84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D391759727BA307300A0C84F /* Soul Provider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soul Provider.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D391759D27BA307300A0C84F /* soulprovider-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "soulprovider-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D391759F27BA307300A0C84F /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		D39175B627BA329C00A0C84F /* SoulProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulProvider.swift; sourceTree = "<group>"; };
-		D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataFetcher.swift; sourceTree = "<group>"; };
 		D39175BC27BA32DD00A0C84F /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
 		D3B94F5927C2ADA100BFB119 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "soulprovider-ios--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -57,10 +54,8 @@
 				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
 				D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */,
 				D39175BC27BA32DD00A0C84F /* RadioView.swift */,
-				D39175BA27BA32D000A0C84F /* RadioMetadataFetcher.swift */,
 				D39175B627BA329C00A0C84F /* SoulProvider.swift */,
 				D391758F27BA307300A0C84F /* Shared */,
-				D391759E27BA307300A0C84F /* macOS */,
 				D391759827BA307300A0C84F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -80,14 +75,6 @@
 				D391759D27BA307300A0C84F /* soulprovider-ios.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D391759E27BA307300A0C84F /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				D391759F27BA307300A0C84F /* macOS.entitlements */,
-			);
-			path = macOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,7 +179,6 @@
 			files = (
 				D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */,
 				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
-				D39175BB27BA32D000A0C84F /* RadioMetadataFetcher.swift in Sources */,
 				D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

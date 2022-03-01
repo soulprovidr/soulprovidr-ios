@@ -1,15 +1,16 @@
 import SwiftUI
 import AVFAudio
+import MediaPlayer
 
 @main
 struct SoulProvider: App {
-    @StateObject private var fetcher = RadioMetadataFetcher()
+    private var audioSession: AVAudioSession? = nil
+
     @StateObject private var player = RadioPlayer()
 
     var body: some Scene {
         WindowGroup {
             RadioView()
-                .environmentObject(fetcher)
                 .environmentObject(player)
                 .preferredColorScheme(.light)
         }

@@ -1,12 +1,6 @@
 import Foundation
 import SwiftUI
 
-enum RadioStatus {
-    case stopped
-    case buffering
-    case playing
-}
-
 var HeaderView: some View {
     HStack {
         Image("SPLogoRounded")
@@ -21,10 +15,10 @@ var HeaderView: some View {
 }
 
 struct RadioMetadataView: View {
-    var radioMetadata: RadioMetadata
+    var metadata: RadioMetadata
     var body: some View {
         VStack {
-            AsyncImage(url: radioMetadata.cover) { phase in
+            AsyncImage(url: metadata.cover) { phase in
                 if let image = phase.image {
                     image
                         .resizable()
@@ -35,11 +29,11 @@ struct RadioMetadataView: View {
             }
             .cornerRadius(4)
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.10), radius: 5)
-            Text(radioMetadata.title)
+            Text(metadata.title)
                 .font(.system(size: 24, weight: .bold))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
-            Text(radioMetadata.artist)
+            Text(metadata.artist)
                 .font(.system(size: 20))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -49,17 +43,19 @@ struct RadioMetadataView: View {
 struct RadioProgressView: View {
     var duration: Double
     var startedAt: String
-    var status: RadioPlayerStatus
+    var status: RadioStatus
 
     @State private var elapsed = 0.0
 
     let progressTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
     var progressBarColour: Color {
-        return status == RadioPlayerStatus.playing ? .blue : .gray
+        return status == RadioStatus.playing ? .blue : .gray
     }
 
-    func getProgress() -> Double { min(1, Double(elapsed) / Double(duration)) }
+    var progressBarValue: Double {
+        return min(1, Double(elapsed) / Double(duration))
+    }
 
     func handleProgressTimer() {
         elapsed = abs(ISO8601DateFormatter().date(from: startedAt)!.addingTimeInterval(10).timeIntervalSinceNow)
@@ -73,7 +69,7 @@ struct RadioProgressView: View {
 
     var body: some View {
         VStack {
-            ProgressView(value: getProgress())
+            ProgressView(value: progressBarValue)
                 .progressViewStyle(LinearProgressViewStyle(tint: progressBarColour))
                 .onReceive(progressTimer) { _ in handleProgressTimer() }
             HStack {
@@ -88,21 +84,20 @@ struct RadioProgressView: View {
 }
 
 struct RadioView: View {
-    @EnvironmentObject private var fetcher: RadioMetadataFetcher
     @EnvironmentObject private var player: RadioPlayer
     @Environment(\.colorScheme) var colorScheme
     
     var buttonIcon: String {
-        return player.status == RadioPlayerStatus.stopped ? "play.fill" : "pause.fill"
+        return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
     }
 
     func handleListenClick() -> Void {
-        if player.status == RadioPlayerStatus.stopped {
+        if player.status == RadioStatus.stopped {
             player.listen()
+            vibrate()
         } else {
             player.stop()
         }
-        vibrate()
     }
 
     func vibrate() {
@@ -112,16 +107,15 @@ struct RadioView: View {
 
     var body: some View {
         VStack {
-            if let radioMetadata = fetcher.radioMetadata, let status = player.status {
+            if let metadata = player.metadata, let status = player.status {
                 HeaderView
                 Spacer()
-                RadioMetadataView(radioMetadata: radioMetadata)
-                RadioProgressView(duration: radioMetadata.duration, startedAt: radioMetadata.started_at, status: status)
+                RadioMetadataView(metadata: metadata)
+                RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: status)
                 Spacer()
                 ZStack {
                     Button {
                         handleListenClick()
-                        vibrate()
                     } label: {
                         Image(systemName: buttonIcon)
                             .resizable()
@@ -137,7 +131,7 @@ struct RadioView: View {
         }
         .padding()
         .task {
-            try? await fetcher.fetch()
+            try? await player.setupMetadataHandler()
         }
     }
 }
