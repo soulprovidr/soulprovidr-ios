@@ -87,7 +87,6 @@ class RadioPlayer: ObservableObject {
             metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
             
             // Download cover art and update Now Playing info.
-            print(metadata!.cover)
             let task = URLSession.shared.dataTask(with: metadata!.cover) { data, response, error in
                 guard let data = data, error == nil else { return }
                 DispatchQueue.main.async {
@@ -96,6 +95,7 @@ class RadioPlayer: ObservableObject {
                     nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = "audio"
                     nowPlayingInfo[MPMediaItemPropertyTitle] = self.metadata!.title
                     nowPlayingInfo[MPMediaItemPropertyArtist] = self.metadata!.artist
+//                    nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = "Soul Provider"
                     if let image = UIImage(data: data) {
                         nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in
                             return image
