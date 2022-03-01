@@ -42,10 +42,11 @@ class RadioPlayer: ObservableObject {
     private var player: AVPlayer?
     private var playerItemContext: UnsafeMutableRawPointer?
     private var remoteCommandCenter: MPRemoteCommandCenter
+    private var statusObserver: NSKeyValueObservation?
 
     private let radioMetadataUrl = "https://api.radioking.io/widget/radio/soulprovidr/track/current"
     private let radioStreamUrl = "https://www.radioking.com/play/soulprovidr"
-    
+
     init() {
         audioSession = AVAudioSession.sharedInstance()
         nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
@@ -71,21 +72,21 @@ class RadioPlayer: ObservableObject {
             self.handleAudioSessionInterruption(notification: notification)
         }
     }
-    
+
     func removeInterruptionHandler() {
         interruptionObserver = nil
     }
-    
+
     func setupMetadataHandler() async
     throws {
         guard let url = URL(string: radioMetadataUrl) else { return }
-        
+
         let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
         guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw FetchError.badRequest }
 
         do {
             metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
-            
+
             // Download cover art and update Now Playing info.
             let task = URLSession.shared.dataTask(with: metadata!.cover) { data, response, error in
                 guard let data = data, error == nil else { return }
@@ -104,7 +105,7 @@ class RadioPlayer: ObservableObject {
                     self.nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
                 }
             }
-            
+
             task.resume()
 
             // Schedule next request.
@@ -118,7 +119,7 @@ class RadioPlayer: ObservableObject {
             throw FetchError.badJSON
         }
     }
-    
+
     func setupRemoteCommands() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
         remoteCommandCenter.playCommand.addTarget { _ in
@@ -135,18 +136,11 @@ class RadioPlayer: ObservableObject {
         let url = URL(string: radioStreamUrl)
         let asset = AVAsset(url: url!)
         let playerItem = AVPlayerItem(asset: asset)
-        playerItem.preferredForwardBufferDuration = 0
-        _ = playerItem.observe(\.status, options: [.new, .old], changeHandler: {
-            (playerItem, change) in
-            switch playerItem.status {
-            case .readyToPlay:
-                print("Ready to play!")
-            case .failed:
-                print("There was an error!")
-            default: ()
-                print("Some unknown thing happened!")
-            }
-        })
+
+        statusObserver = playerItem.observe(\.status, options: [.new]) { (playerItem, change) in
+            // This only fires on .readyToPlay...
+            self.status = RadioStatus.playing
+        }
         return playerItem
     }
 
@@ -171,7 +165,7 @@ class RadioPlayer: ObservableObject {
 
     func listen() {
         player = AVPlayer(playerItem: getPlayerItem())
-        status = RadioStatus.playing
+        status = RadioStatus.buffering
         player!.play()
         try? audioSession.setActive(true)
         setupInterruptionHandler()

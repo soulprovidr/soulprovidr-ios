@@ -16,6 +16,7 @@ var HeaderView: some View {
 
 struct RadioMetadataView: View {
     var metadata: RadioMetadata
+    var status: RadioStatus
     var body: some View {
         VStack {
             AsyncImage(url: metadata.cover) { phase in
@@ -29,13 +30,19 @@ struct RadioMetadataView: View {
             }
             .cornerRadius(4)
             .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.10), radius: 5)
-            Text(metadata.title)
-                .font(.system(size: 24, weight: .bold))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 10)
-            Text(metadata.artist)
-                .font(.system(size: 20))
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                VStack {
+                    Text(metadata.title)
+                        .font(.system(size: 24, weight: .bold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 10)
+                    Text(metadata.artist)
+                        .font(.system(size: 20))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Spacer()
+                (status == RadioStatus.buffering ? ProgressView() : nil)
+            }
         }
     }
 }
@@ -110,7 +117,7 @@ struct RadioView: View {
             if let metadata = player.metadata, let status = player.status {
                 HeaderView
                 Spacer()
-                RadioMetadataView(metadata: metadata)
+                RadioMetadataView(metadata: metadata, status: status)
                 RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: status)
                 Spacer()
                 ZStack {
