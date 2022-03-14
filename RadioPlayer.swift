@@ -3,15 +3,9 @@ import Foundation
 import SwiftUI
 import MediaPlayer
 
-enum FetchError: Error {
-    case badRequest
-    case badJSON
-}
-
-enum InterruptionType: String {
-    case began
-    case ended
-    case failed
+enum RadioError: Error {
+    case metadataError
+    case playbackError
 }
 
 struct RadioMetadata: Codable {
@@ -33,118 +27,38 @@ enum RadioStatus: String {
 
 @MainActor
 class RadioPlayer: ObservableObject {
+    @Published var elapsed : Double = 0.0
     @Published var metadata : RadioMetadata? = nil
     @Published var status = RadioStatus.stopped
+    
+    private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
+    private let radioStreamUrl = URL(string: "https://www.radioking.com/play/soulprovidr")
 
     private var audioSession: AVAudioSession
-    private var interruptionObserver: NSObjectProtocol!
     private var nowPlayingInfoCenter: MPNowPlayingInfoCenter
-    private var player: AVPlayer?
-    private var playerItemContext: UnsafeMutableRawPointer?
     private var remoteCommandCenter: MPRemoteCommandCenter
-    private var statusObserver: NSKeyValueObservation?
 
-    private let radioMetadataUrl = "https://api.radioking.io/widget/radio/soulprovidr/track/current"
-    private let radioStreamUrl = "https://www.radioking.com/play/soulprovidr"
+    private var interruptionObserver: NSObjectProtocol?
+    private var statusObserver: NSKeyValueObservation?
+    private var timeControlStatusObserver: NSKeyValueObservation?
+
+    private var player: AVPlayer?
 
     init() {
         audioSession = AVAudioSession.sharedInstance()
         nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
         remoteCommandCenter = MPRemoteCommandCenter.shared()
-        setupAudioSession()
-        setupRemoteCommands()
-    }
 
-    func setupAudioSession() {
         do {
-            try audioSession.setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth, .mixWithOthers])
+            try audioSession.setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth])
         } catch {
             print("Failed to set audio session route sharing policy: \(error)")
         }
+        
+        handleRemoteCommands()
     }
 
-    // Observe interruptions to the audio session.
-    func setupInterruptionHandler() {
-        interruptionObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification,
-                                                                      object: audioSession,
-                                                                      queue: .main) {
-            [unowned self] notification in
-            self.handleAudioSessionInterruption(notification: notification)
-        }
-    }
-
-    func removeInterruptionHandler() {
-        interruptionObserver = nil
-    }
-
-    func setupMetadataHandler() async
-    throws {
-        guard let url = URL(string: radioMetadataUrl) else { return }
-
-        let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw FetchError.badRequest }
-
-        do {
-            metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
-
-            // Download cover art and update Now Playing info.
-            let task = URLSession.shared.dataTask(with: metadata!.cover) { data, response, error in
-                guard let data = data, error == nil else { return }
-                DispatchQueue.main.async {
-                    var nowPlayingInfo = [String: Any]()
-                    nowPlayingInfo[MPNowPlayingInfoPropertyIsLiveStream] = true
-                    nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = "audio"
-                    nowPlayingInfo[MPMediaItemPropertyTitle] = self.metadata!.title
-                    nowPlayingInfo[MPMediaItemPropertyArtist] = self.metadata!.artist
-//                    nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = "Soul Provider"
-                    if let image = UIImage(data: data) {
-                        nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in
-                            return image
-                        }
-                    }
-                    self.nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
-                }
-            }
-
-            task.resume()
-
-            // Schedule next request.
-            let nextTrackDate = ISO8601DateFormatter().date(from: metadata!.next_track)?.addingTimeInterval(10)
-            Timer.scheduledTimer(withTimeInterval: nextTrackDate!.timeIntervalSinceNow, repeats: false) { _ in
-                Task {
-                    try? await self.setupMetadataHandler()
-                }
-            }
-        } catch {
-            throw FetchError.badJSON
-        }
-    }
-
-    func setupRemoteCommands() {
-        UIApplication.shared.beginReceivingRemoteControlEvents()
-        remoteCommandCenter.playCommand.addTarget { _ in
-            self.listen()
-            return MPRemoteCommandHandlerStatus.success
-        }
-        remoteCommandCenter.pauseCommand.addTarget { _ in
-            self.stop()
-            return MPRemoteCommandHandlerStatus.success
-        }
-    }
-
-    func getPlayerItem() -> AVPlayerItem {
-        let url = URL(string: radioStreamUrl)
-        let asset = AVAsset(url: url!)
-        let playerItem = AVPlayerItem(asset: asset)
-
-        statusObserver = playerItem.observe(\.status, options: [.new]) { (playerItem, change) in
-            // This only fires on .readyToPlay...
-            self.status = RadioStatus.playing
-        }
-        return playerItem
-    }
-
-    func handleAudioSessionInterruption(notification: Notification) {
+    func handleInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
               let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
@@ -152,7 +66,7 @@ class RadioPlayer: ObservableObject {
               }
         switch type {
         case .began:
-            stop()
+            pause()
         case .ended:
             guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
@@ -163,19 +77,100 @@ class RadioPlayer: ObservableObject {
         }
     }
 
-    func listen() {
-        player = AVPlayer(playerItem: getPlayerItem())
-        status = RadioStatus.buffering
-        player!.play()
-        try? audioSession.setActive(true)
-        setupInterruptionHandler()
-        
+    func handleRemoteCommands() {
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        remoteCommandCenter.playCommand.addTarget { _ in
+            self.listen()
+            return MPRemoteCommandHandlerStatus.success
+        }
+        remoteCommandCenter.pauseCommand.addTarget { _ in
+            self.pause()
+            return MPRemoteCommandHandlerStatus.success
+        }
     }
 
-    func stop() {
-        status = RadioStatus.stopped
+    func listen() {
+        // We create a new player each time so we can start listening "live", rather than from the place we paused at.
+        player = AVPlayer(url: radioStreamUrl!)
+
+        // Observe and react to changes in player status.
+        timeControlStatusObserver = player!.observe(\.timeControlStatus, options: [.new]) { (player, change) in
+            let timeControlStatus = AVPlayer.TimeControlStatus(rawValue: player.timeControlStatus.rawValue)
+            switch timeControlStatus {
+            // Destroy the player + associated observers when audio is paused.
+            case .paused:
+                self.status = RadioStatus.stopped
+                try? self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
+                self.player = nil
+                self.interruptionObserver = nil
+                self.timeControlStatusObserver = nil
+            // Set status to 'buffering' when waiting.
+            case .waitingToPlayAtSpecifiedRate:
+                self.status = RadioStatus.buffering
+            // Create observers once audio begins playing.
+            case .playing:
+                self.status = RadioStatus.playing
+                self.interruptionObserver = NotificationCenter.default.addObserver(
+                    forName: AVAudioSession.interruptionNotification,
+                    object: self.audioSession,
+                    queue: .main
+                ) {
+                    [unowned self] notification in
+                    self.handleInterruption(notification: notification)
+                }
+            default: ()
+            }
+        }
+
+        // Begin listening.
+        try? audioSession.setActive(true)
+        player!.play()
+    }
+
+    func pause() {
         player!.pause()
-        try? audioSession.setActive(false)
-        removeInterruptionHandler()
+    }
+
+    func syncMetadata() async
+    throws {
+        let (data, response) = try await URLSession.shared.data(for: URLRequest(url: radioMetadataUrl!))
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw RadioError.metadataError }
+
+        do {
+            metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
+            updateNowPlayingInfo(metadata: metadata!)
+            // Schedule the next sync.
+            let nextTrackDate = ISO8601DateFormatter().date(from: metadata!.next_track)?.addingTimeInterval(10)
+            Timer.scheduledTimer(withTimeInterval: nextTrackDate!.timeIntervalSinceNow, repeats: false) { _ in
+                Task {
+                    // TODO: Improve error handling here.
+                    try? await self.syncMetadata()
+                }
+            }
+        } catch {
+            throw RadioError.metadataError
+        }
+    }
+
+    // Download cover art and update Now Playing info.
+    func updateNowPlayingInfo(metadata: RadioMetadata) {
+        let task = URLSession.shared.dataTask(with: metadata.cover) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                var nowPlayingInfo = [String: Any]()
+                nowPlayingInfo[MPNowPlayingInfoPropertyIsLiveStream] = true
+                nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = "audio"
+                nowPlayingInfo[MPMediaItemPropertyTitle] = metadata.title
+                nowPlayingInfo[MPMediaItemPropertyArtist] = metadata.artist
+                nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = "Soul Provider"
+                if let image = UIImage(data: data) {
+                    nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in
+                        return image
+                    }
+                }
+                self.nowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+            }
+        }
+        task.resume()
     }
 }

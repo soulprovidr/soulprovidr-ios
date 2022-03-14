@@ -14,6 +14,8 @@
 		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
 		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
 		D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D3B94F5927C2ADA100BFB119 /* .gitignore */; };
+		D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */; };
+		D3F9E9A027DEF80E00FEEDCD /* DefaultCover.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		D39175BC27BA32DD00A0C84F /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
 		D3B94F5927C2ADA100BFB119 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "soulprovider-ios--iOS--Info.plist"; sourceTree = "<group>"; };
+		D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultCover.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,23 +53,17 @@
 		D391758A27BA307300A0C84F = {
 			isa = PBXGroup;
 			children = (
+				D391759227BA307300A0C84F /* Assets.xcassets */,
 				D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */,
-				D3B94F5927C2ADA100BFB119 /* .gitignore */,
-				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
-				D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */,
-				D39175BC27BA32DD00A0C84F /* RadioView.swift */,
 				D39175B627BA329C00A0C84F /* SoulProvider.swift */,
-				D391758F27BA307300A0C84F /* Shared */,
+				D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */,
+				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
+				D39175BC27BA32DD00A0C84F /* RadioView.swift */,
+				D33FEC8E27BA54E600154E7A /* SPLogoRounded.png */,
+				D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */,
+				D3B94F5927C2ADA100BFB119 /* .gitignore */,
 				D391759827BA307300A0C84F /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		D391758F27BA307300A0C84F /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				D391759227BA307300A0C84F /* Assets.xcassets */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		D391759827BA307300A0C84F /* Products */ = {
@@ -159,6 +157,7 @@
 				D39175A427BA307300A0C84F /* Assets.xcassets in Resources */,
 				D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */,
 				D33FEC8F27BA54E600154E7A /* SPLogoRounded.png in Resources */,
+				D3F9E9A027DEF80E00FEEDCD /* DefaultCover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */,
+				D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */,
 				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
 				D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */,
 			);
@@ -318,7 +318,7 @@
 				INFOPLIST_FILE = "soulprovider-ios--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -350,7 +350,7 @@
 				INFOPLIST_FILE = "soulprovider-ios--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D391759627BA307300A0C84F"
-               BuildableName = "soulprovider-ios.app"
+               BuildableName = "Soul Provider.app"
                BlueprintName = "soulprovider-ios (iOS)"
                ReferencedContainer = "container:soulprovider-ios.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D391759627BA307300A0C84F"
-            BuildableName = "soulprovider-ios.app"
+            BuildableName = "Soul Provider.app"
             BlueprintName = "soulprovider-ios (iOS)"
             ReferencedContainer = "container:soulprovider-ios.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D391759627BA307300A0C84F"
-            BuildableName = "soulprovider-ios.app"
+            BuildableName = "Soul Provider.app"
             BlueprintName = "soulprovider-ios (iOS)"
             ReferencedContainer = "container:soulprovider-ios.xcodeproj">
          </BuildableReference>

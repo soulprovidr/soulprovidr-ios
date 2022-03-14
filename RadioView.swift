@@ -9,7 +9,7 @@ var HeaderView: some View {
             .frame(width: 32, height: 32)
         Text("SOUL PROVIDER")
             .font(.system(size: 16, weight: .bold))
-            .offset(x: 5)
+            .offset(x: 4)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
 }
@@ -17,19 +17,27 @@ var HeaderView: some View {
 struct RadioMetadataView: View {
     var metadata: RadioMetadata
     var status: RadioStatus
+    @State var isCoverLoaded = false
     var body: some View {
         VStack {
-            AsyncImage(url: metadata.cover) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                } else {
-                    ProgressView()
-                }
+            AsyncImage(url: metadata.cover) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(4)
+                    .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.10), radius: 5)
+                    .opacity(isCoverLoaded ? 1 : 0)
+                    .frame(idealWidth: 400)
+                    .onAppear {
+                        withAnimation {
+                            isCoverLoaded = true
+                        }
+                    }
+            } placeholder: {
+                Rectangle()
+                    .fill(.clear)
+                    .aspectRatio(1.0, contentMode: .fit)
             }
-            .cornerRadius(4)
-            .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.10), radius: 5)
             HStack {
                 VStack {
                     Text(metadata.title)
@@ -57,7 +65,7 @@ struct RadioProgressView: View {
     let progressTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
 
     var progressBarColour: Color {
-        return status == RadioStatus.playing ? .blue : .gray
+        return status == RadioStatus.playing ? Color(UIColor(.blue)) : Color("ForegroundGrey")
     }
 
     var progressBarValue: Double {
@@ -65,7 +73,7 @@ struct RadioProgressView: View {
     }
 
     func handleProgressTimer() {
-        elapsed = abs(ISO8601DateFormatter().date(from: startedAt)!.addingTimeInterval(10).timeIntervalSinceNow)
+        elapsed = min(abs(ISO8601DateFormatter().date(from: startedAt)!.addingTimeInterval(10).timeIntervalSinceNow), TimeInterval(duration))
     }
 
     func secondsToTime(s: Double) -> String {
@@ -75,10 +83,24 @@ struct RadioProgressView: View {
     }
 
     var body: some View {
-        VStack {
-            ProgressView(value: progressBarValue)
-                .progressViewStyle(LinearProgressViewStyle(tint: progressBarColour))
-                .onReceive(progressTimer) { _ in handleProgressTimer() }
+        Group {
+            Rectangle()
+                .fill(.clear)
+                .frame(height: 4)
+                .background {
+                    GeometryReader { geometry in
+                        let width = progressBarValue * geometry.size.width
+                        ZStack(alignment: .leading) {
+                            Rectangle()
+                                .fill(Color("BackgroundGrey"))
+                                .frame(height: 1)
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(progressBarColour)
+                                .frame(width: width, height: 4)
+                                .onReceive(progressTimer) { _ in handleProgressTimer() }
+                        }.frame(height: 4)
+                    }
+                }
             HStack {
                 Text("\(secondsToTime(s: elapsed))")
                     .font(.caption)
@@ -86,13 +108,15 @@ struct RadioProgressView: View {
                 Text("\(secondsToTime(s: duration))")
                     .font(.caption)
             }
-        }.padding(.top, 10)
+        }.padding([.top], 10)
     }
 }
 
 struct RadioView: View {
     @EnvironmentObject private var player: RadioPlayer
     @Environment(\.colorScheme) var colorScheme
+
+    @State private var isInitialized = false
     
     var buttonIcon: String {
         return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
@@ -103,7 +127,7 @@ struct RadioView: View {
             player.listen()
             vibrate()
         } else {
-            player.stop()
+            player.pause()
         }
     }
 
@@ -120,25 +144,27 @@ struct RadioView: View {
                 RadioMetadataView(metadata: metadata, status: status)
                 RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: status)
                 Spacer()
-                ZStack {
-                    Button {
-                        handleListenClick()
-                    } label: {
-                        Image(systemName: buttonIcon)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 35, height: 35)
-                            .padding()
-                    }
-                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                Button {
+                    handleListenClick()
+                } label: {
+                    Image(systemName: buttonIcon)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 35, height: 35)
+                        .padding()
                 }
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
             } else {
-                ProgressView("Calibrating funk levels...")
+                LoadingView()
             }
         }
         .padding()
         .task {
-            try? await player.setupMetadataHandler()
+            do {
+                try await player.syncMetadata()
+            } catch {
+                print("Could not fetch metadata: \(error)")
+            }
         }
     }
 }
