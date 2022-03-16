@@ -1,15 +1,44 @@
 import Foundation
 import SwiftUI
 
+struct LiveIcon: View {
+    let size: CGFloat
+
+    @State var isVisible = true
+
+    let timer = Timer.publish(every: 0.75, on: .main, in: .common).autoconnect()
+    
+    var body: some View {
+        Circle()
+            .fill(Color(UIColor(.red)))
+            .frame(width: size, height: size, alignment: .center)
+            .opacity(isVisible ? 1 : 0)
+            .onReceive(timer) { _ in
+                withAnimation {
+                    isVisible = !isVisible
+                }
+            }
+    }
+}
+
 var HeaderView: some View {
     HStack {
-        Image("SPLogoRounded")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 32, height: 32)
-        Text("SOUL PROVIDER")
-            .font(.system(size: 16, weight: .bold))
-            .offset(x: 4)
+        HStack {
+            Image("SPLogoRounded")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
+            Text("SOUL PROVIDER")
+                .font(.system(size: 16, weight: .bold))
+                .offset(x: 4)
+        }
+        Spacer()
+        HStack {
+            LiveIcon(size: 6)
+                .offset(x: 2)
+            Text("LIVE")
+                .font(.system(size: 14, weight: .semibold))
+        }.frame(alignment: .center)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
 }
@@ -17,7 +46,9 @@ var HeaderView: some View {
 struct RadioMetadataView: View {
     var metadata: RadioMetadata
     var status: RadioStatus
+
     @State var isCoverLoaded = false
+
     var body: some View {
         VStack {
             AsyncImage(url: metadata.cover) { image in
@@ -115,8 +146,6 @@ struct RadioProgressView: View {
 struct RadioView: View {
     @EnvironmentObject private var player: RadioPlayer
     @Environment(\.colorScheme) var colorScheme
-
-    @State private var isInitialized = false
     
     var buttonIcon: String {
         return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
@@ -154,17 +183,11 @@ struct RadioView: View {
                         .padding()
                 }
                     .foregroundColor(colorScheme == .dark ? .white : .black)
+                Spacer()
             } else {
                 LoadingView()
             }
         }
         .padding()
-        .task {
-            do {
-                try await player.syncMetadata()
-            } catch {
-                print("Could not fetch metadata: \(error)")
-            }
-        }
     }
 }

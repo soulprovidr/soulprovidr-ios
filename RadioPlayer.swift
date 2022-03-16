@@ -27,19 +27,18 @@ enum RadioStatus: String {
 
 @MainActor
 class RadioPlayer: ObservableObject {
+    private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
+    private let radioStreamUrl = URL(string: "https://www.radioking.com/play/soulprovidr")
+
     @Published var elapsed : Double = 0.0
     @Published var metadata : RadioMetadata? = nil
     @Published var status = RadioStatus.stopped
-    
-    private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
-    private let radioStreamUrl = URL(string: "https://www.radioking.com/play/soulprovidr")
 
     private var audioSession: AVAudioSession
     private var nowPlayingInfoCenter: MPNowPlayingInfoCenter
     private var remoteCommandCenter: MPRemoteCommandCenter
 
     private var interruptionObserver: NSObjectProtocol?
-    private var statusObserver: NSKeyValueObservation?
     private var timeControlStatusObserver: NSKeyValueObservation?
 
     private var player: AVPlayer?
@@ -88,10 +87,20 @@ class RadioPlayer: ObservableObject {
             return MPRemoteCommandHandlerStatus.success
         }
     }
-
+    
     func listen() {
         // We create a new player each time so we can start listening "live", rather than from the place we paused at.
         player = AVPlayer(url: radioStreamUrl!)
+        
+//        statusObserver = player!.observe(\.status, options: [.new]) { (player, change) in
+//            let status = AVPlayer.Status(rawValue: player.status.rawValue)
+//            switch (status) {
+//            case .failed:
+//                self.hasPlaybackErrorOccurred = true
+//            default:
+//                self.hasPlaybackErrorOccurred = false
+//            }
+//        }
 
         // Observe and react to changes in player status.
         timeControlStatusObserver = player!.observe(\.timeControlStatus, options: [.new]) { (player, change) in
@@ -124,7 +133,7 @@ class RadioPlayer: ObservableObject {
 
         // Begin listening.
         try? audioSession.setActive(true)
-        player!.play()
+        player!.playImmediately(atRate: 1.0)
     }
 
     func pause() {
@@ -140,7 +149,7 @@ class RadioPlayer: ObservableObject {
             metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
             updateNowPlayingInfo(metadata: metadata!)
             // Schedule the next sync.
-            let nextTrackDate = ISO8601DateFormatter().date(from: metadata!.next_track)?.addingTimeInterval(10)
+            let nextTrackDate = ISO8601DateFormatter().date(from: metadata!.next_track)?.addingTimeInterval(9)
             Timer.scheduledTimer(withTimeInterval: nextTrackDate!.timeIntervalSinceNow, repeats: false) { _ in
                 Task {
                     // TODO: Improve error handling here.

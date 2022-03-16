@@ -8,15 +8,14 @@ struct SoulProvider: App {
 
     @StateObject private var player = RadioPlayer()
 
-    init() {
-        
-    }
-
     var body: some Scene {
         WindowGroup {
             RadioView()
                 .environmentObject(player)
                 .preferredColorScheme(.light)
+                .task {
+                    try? await player.syncMetadata()
+                }
         }
     }
 }
