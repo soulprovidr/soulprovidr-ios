@@ -14,7 +14,6 @@ struct SoulProvider: App {
             RadioView()
                 .environmentObject(metadataFetcher)
                 .environmentObject(player)
-                .preferredColorScheme(.light)
                 .task {
                     try? await metadataFetcher.fetch()
                 }

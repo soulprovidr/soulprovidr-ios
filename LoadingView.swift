@@ -4,24 +4,28 @@ struct LoadingView: View {
     var err: RadioError? = nil
     var onTryAgainClick: (() -> Void)? = nil
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
+        ZStack {
+            VStack {
                 Spacer()
-                Image("SPLogoRounded")
-                    .resizable()
-                    .frame(width: 45, height: 45)
-                    .scaledToFill()
-                Text("SOUL PROVIDER")
-                    .font(.system(size: 22, weight: .bold))
-                    .offset(x: 7)
+                HStack {
+                    Spacer()
+                    Image("SPLogoRounded")
+                        .resizable()
+                        .frame(width: 45, height: 45)
+                        .scaledToFit()
+                    Text("SOUL PROVIDER")
+                        .font(.system(size: 22, weight: .bold))
+                        .offset(x: 7)
+                    Spacer()
+                }
                 Spacer()
             }
             VStack {
-                if err == nil {
-                    ProgressView()
-                } else {
-                    Group {
+                Spacer()
+                VStack {
+                    if err == nil {
+                        ProgressView()
+                    } else {
                         Text("Something went wrong.")
                         Button("Try again") {
                             if onTryAgainClick != nil {
@@ -29,10 +33,8 @@ struct LoadingView: View {
                             }
                         }.offset(y: 10)
                     }
-                }
+                }.frame(height: 100)
             }
-            .frame(width: 250, height: 60)
-            Spacer()
         }
     }
 }
