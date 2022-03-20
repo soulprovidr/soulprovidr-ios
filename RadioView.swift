@@ -60,7 +60,6 @@ struct RadioMetadataView: View {
                     .opacity(isCoverLoaded ? 1 : 0)
                     .frame(idealWidth: 400)
                     .onAppear {
-                        print("cover loaded")
                         withAnimation {
                             isCoverLoaded = true
                         }
@@ -156,15 +155,9 @@ struct RadioView: View {
     func handleListenClick() -> Void {
         if player.status == RadioStatus.stopped {
             player.listen()
-            vibrate()
         } else {
             player.pause()
         }
-    }
-
-    func vibrate() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.success)
     }
 
     var body: some View {
@@ -185,12 +178,12 @@ struct RadioView: View {
                         .padding()
                 }
                     .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .alert("Something went wrong", isPresented: $player.err) {
-                        Button("Okay") {
+                    .alert("Couldn't load the stream", isPresented: $player.err) {
+                        Button("Try again") {
                             // Do nothing (for now)
                         }
                     } message: {
-                        Text("There was a problem playing the stream. Please try again.")
+                        Text("Stay tuned while we resolve the issue.")
                     }
                 Spacer()
             } else {

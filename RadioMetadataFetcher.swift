@@ -15,7 +15,7 @@ struct RadioMetadata: Codable {
 @MainActor
 class RadioMetadataFetcher: ObservableObject {
     private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-    private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/currently")
+    private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
 
     @Published var err: RadioError? = nil
     @Published var metadata: RadioMetadata? = nil
