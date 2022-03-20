@@ -60,6 +60,7 @@ struct RadioMetadataView: View {
                     .opacity(isCoverLoaded ? 1 : 0)
                     .frame(idealWidth: 400)
                     .onAppear {
+                        print("cover loaded")
                         withAnimation {
                             isCoverLoaded = true
                         }
@@ -144,6 +145,7 @@ struct RadioProgressView: View {
 }
 
 struct RadioView: View {
+    @EnvironmentObject private var metadataFetcher: RadioMetadataFetcher
     @EnvironmentObject private var player: RadioPlayer
     @Environment(\.colorScheme) var colorScheme
     
@@ -167,11 +169,11 @@ struct RadioView: View {
 
     var body: some View {
         VStack {
-            if let metadata = player.metadata, let status = player.status {
+            if let metadata = metadataFetcher.metadata {
                 HeaderView
                 Spacer()
-                RadioMetadataView(metadata: metadata, status: status)
-                RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: status)
+                RadioMetadataView(metadata: metadata, status: player.status)
+                RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: player.status)
                 Spacer()
                 Button {
                     handleListenClick()
@@ -183,9 +185,20 @@ struct RadioView: View {
                         .padding()
                 }
                     .foregroundColor(colorScheme == .dark ? .white : .black)
+                    .alert("Something went wrong", isPresented: $player.err) {
+                        Button("Okay") {
+                            // Do nothing (for now)
+                        }
+                    } message: {
+                        Text("There was a problem playing the stream. Please try again.")
+                    }
                 Spacer()
             } else {
-                LoadingView()
+                LoadingView(err: metadataFetcher.err, onTryAgainClick: {
+                    Task {
+                        try? await metadataFetcher.fetch()
+                    }
+                })
             }
         }
         .padding()

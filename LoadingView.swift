@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct LoadingView: View {
+    var err: RadioError? = nil
+    var onTryAgainClick: (() -> Void)? = nil
     var body: some View {
         VStack {
             Spacer()
@@ -15,8 +17,21 @@ struct LoadingView: View {
                     .offset(x: 7)
                 Spacer()
             }
-            ProgressView()
-                .offset(y: 24)
+            VStack {
+                if err == nil {
+                    ProgressView()
+                } else {
+                    Group {
+                        Text("Something went wrong.")
+                        Button("Try again") {
+                            if onTryAgainClick != nil {
+                                onTryAgainClick!()
+                            }
+                        }.offset(y: 10)
+                    }
+                }
+            }
+            .frame(width: 250, height: 60)
             Spacer()
         }
     }
