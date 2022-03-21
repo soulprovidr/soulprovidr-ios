@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D30CAAB727E6BD7300FE6E9F /* RadioMetadataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */; };
 		D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */; };
+		D344D93327E832020069FCFC /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D344D93227E832020069FCFC /* LogoView.swift */; };
 		D39175A427BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175A527BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataFetcher.swift; sourceTree = "<group>"; };
 		D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayer.swift; sourceTree = "<group>"; };
+		D344D93227E832020069FCFC /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		D391759227BA307300A0C84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D391759727BA307300A0C84F /* Soul Provider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soul Provider.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D391759D27BA307300A0C84F /* soulprovider-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "soulprovider-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +59,7 @@
 				D391759227BA307300A0C84F /* Assets.xcassets */,
 				D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */,
 				D39175B627BA329C00A0C84F /* SoulProvider.swift */,
+				D344D93227E832020069FCFC /* LogoView.swift */,
 				D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */,
 				D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */,
 				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */,
+				D344D93327E832020069FCFC /* LogoView.swift in Sources */,
 				D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */,
 				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
 				D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */,

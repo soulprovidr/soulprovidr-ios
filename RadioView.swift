@@ -24,10 +24,7 @@ struct LiveIcon: View {
 var HeaderView: some View {
     HStack {
         HStack {
-            Image("SPLogoRounded")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 32, height: 32)
+            LogoView(size: 32)
             Text("SOUL PROVIDER")
                 .font(.system(size: 16, weight: .bold))
                 .offset(x: 4)
@@ -72,12 +69,10 @@ struct RadioMetadataView: View {
             HStack {
                 VStack {
                     Text(metadata.title)
-//                    Text("This is some really long text that will go off the screen")
                         .font(.system(size: 24, weight: .bold))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top, 10)
                         .lineLimit(1)
-//                    Text("More text that is designed to be too long for the screen")
                     Text(metadata.artist)
                         .font(.system(size: 20))
                         .frame(maxWidth: .infinity, alignment: .leading)

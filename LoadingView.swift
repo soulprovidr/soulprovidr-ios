@@ -9,10 +9,7 @@ struct LoadingView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Image("SPLogoRounded")
-                        .resizable()
-                        .frame(width: 45, height: 45)
-                        .scaledToFit()
+                    LogoView(size: 45, modifier: err == nil ? .classic : .surprised)
                     Text("SOUL PROVIDER")
                         .font(.system(size: 22, weight: .bold))
                         .offset(x: 7)
