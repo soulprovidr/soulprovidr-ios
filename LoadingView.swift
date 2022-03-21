@@ -32,6 +32,7 @@ struct LoadingView: View {
                                 onTryAgainClick!()
                             }
                         }.offset(y: 10)
+                            .foregroundColor(.blue)
                     }
                 }.frame(height: 100)
             }
