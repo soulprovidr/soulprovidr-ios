@@ -15,7 +15,6 @@
 		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
 		D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D3B94F5927C2ADA100BFB119 /* .gitignore */; };
 		D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */; };
-		D3F9E9A027DEF80E00FEEDCD /* DefaultCover.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */; };
 		D3F9E9A227E465AC00FEEDCD /* images in Resources */ = {isa = PBXBuildFile; fileRef = D3F9E9A127E465AC00FEEDCD /* images */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +29,6 @@
 		D3B94F5927C2ADA100BFB119 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "soulprovider-ios--iOS--Info.plist"; sourceTree = "<group>"; };
 		D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultCover.png; sourceTree = "<group>"; };
 		D3F9E9A127E465AC00FEEDCD /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +61,6 @@
 				D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */,
 				D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */,
 				D39175BC27BA32DD00A0C84F /* RadioView.swift */,
-				D3F9E99F27DEF80E00FEEDCD /* DefaultCover.png */,
 				D3B94F5927C2ADA100BFB119 /* .gitignore */,
 				D391759827BA307300A0C84F /* Products */,
 			);
@@ -160,7 +157,6 @@
 				D3F9E9A227E465AC00FEEDCD /* images in Resources */,
 				D39175A427BA307300A0C84F /* Assets.xcassets in Resources */,
 				D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */,
-				D3F9E9A027DEF80E00FEEDCD /* DefaultCover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
