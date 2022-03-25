@@ -10,8 +10,8 @@
 		D30CAAB727E6BD7300FE6E9F /* RadioMetadataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */; };
 		D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */; };
 		D344D93327E832020069FCFC /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D344D93227E832020069FCFC /* LogoView.swift */; };
+		D344D93527ED8DED0069FCFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D344D93427ED8DED0069FCFC /* LaunchScreen.storyboard */; };
 		D39175A427BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
-		D39175A527BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
 		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
 		D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D3B94F5927C2ADA100BFB119 /* .gitignore */; };
@@ -23,26 +23,19 @@
 		D30CAAB627E6BD7300FE6E9F /* RadioMetadataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataFetcher.swift; sourceTree = "<group>"; };
 		D33FEC9027BCDD7100154E7A /* RadioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayer.swift; sourceTree = "<group>"; };
 		D344D93227E832020069FCFC /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		D344D93427ED8DED0069FCFC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D391759227BA307300A0C84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D391759727BA307300A0C84F /* Soul Provider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soul Provider.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D391759D27BA307300A0C84F /* soulprovider-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "soulprovider-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D39175B627BA329C00A0C84F /* SoulProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulProvider.swift; sourceTree = "<group>"; };
 		D39175BC27BA32DD00A0C84F /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
 		D3B94F5927C2ADA100BFB119 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "soulprovider-ios--iOS--Info.plist"; sourceTree = "<group>"; };
+		D3B94F5B27C5EE4300BFB119 /* soulprovidr--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "soulprovidr--iOS--Info.plist"; sourceTree = "<group>"; };
 		D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		D3F9E9A127E465AC00FEEDCD /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D391759427BA307300A0C84F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D391759A27BA307300A0C84F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -57,7 +50,8 @@
 			children = (
 				D3F9E9A127E465AC00FEEDCD /* images */,
 				D391759227BA307300A0C84F /* Assets.xcassets */,
-				D3B94F5B27C5EE4300BFB119 /* soulprovider-ios--iOS--Info.plist */,
+				D3B94F5B27C5EE4300BFB119 /* soulprovidr--iOS--Info.plist */,
+				D344D93427ED8DED0069FCFC /* LaunchScreen.storyboard */,
 				D39175B627BA329C00A0C84F /* SoulProvider.swift */,
 				D344D93227E832020069FCFC /* LogoView.swift */,
 				D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */,
@@ -73,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				D391759727BA307300A0C84F /* Soul Provider.app */,
-				D391759D27BA307300A0C84F /* soulprovider-ios.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D391759627BA307300A0C84F /* soulprovider-ios (iOS) */ = {
+		D391759627BA307300A0C84F /* soulprovidr (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D39175A827BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovider-ios (iOS)" */;
+			buildConfigurationList = D39175A827BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovidr (iOS)" */;
 			buildPhases = (
 				D391759327BA307300A0C84F /* Sources */,
 				D391759427BA307300A0C84F /* Frameworks */,
@@ -93,26 +86,9 @@
 			);
 			dependencies = (
 			);
-			name = "soulprovider-ios (iOS)";
+			name = "soulprovidr (iOS)";
 			productName = "soulprovider-ios (iOS)";
 			productReference = D391759727BA307300A0C84F /* Soul Provider.app */;
-			productType = "com.apple.product-type.application";
-		};
-		D391759C27BA307300A0C84F /* soulprovider-ios (macOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D39175AB27BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovider-ios (macOS)" */;
-			buildPhases = (
-				D391759927BA307300A0C84F /* Sources */,
-				D391759A27BA307300A0C84F /* Frameworks */,
-				D391759B27BA307300A0C84F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "soulprovider-ios (macOS)";
-			productName = "soulprovider-ios (macOS)";
-			productReference = D391759D27BA307300A0C84F /* soulprovider-ios.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,12 +104,9 @@
 					D391759627BA307300A0C84F = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					D391759C27BA307300A0C84F = {
-						CreatedOnToolsVersion = 13.2.1;
-					};
 				};
 			};
-			buildConfigurationList = D391758E27BA307300A0C84F /* Build configuration list for PBXProject "soulprovider-ios" */;
+			buildConfigurationList = D391758E27BA307300A0C84F /* Build configuration list for PBXProject "soulprovidr" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -146,8 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D391759627BA307300A0C84F /* soulprovider-ios (iOS) */,
-				D391759C27BA307300A0C84F /* soulprovider-ios (macOS) */,
+				D391759627BA307300A0C84F /* soulprovidr (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -158,16 +130,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3F9E9A227E465AC00FEEDCD /* images in Resources */,
+				D344D93527ED8DED0069FCFC /* LaunchScreen.storyboard in Resources */,
 				D39175A427BA307300A0C84F /* Assets.xcassets in Resources */,
 				D3B94F5A27C2ADA100BFB119 /* .gitignore in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D391759B27BA307300A0C84F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D39175A527BA307300A0C84F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,13 +149,6 @@
 				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
 				D33FEC9127BCDD7100154E7A /* RadioPlayer.swift in Sources */,
 				D30CAAB727E6BD7300FE6E9F /* RadioMetadataFetcher.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D391759927BA307300A0C84F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,13 +271,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = JWK97SJQ3V;
+				DEVELOPMENT_TEAM = VPLAK52BTN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "soulprovider-ios--iOS--Info.plist";
+				INFOPLIST_FILE = "soulprovidr--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -331,8 +290,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "soulprovidr.soulprovider-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
+				PROVISIONING_PROFILE_SPECIFIER = "Soul Provider Provisioning Profile";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -345,13 +305,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = JWK97SJQ3V;
+				DEVELOPMENT_TEAM = VPLAK52BTN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "soulprovider-ios--iOS--Info.plist";
+				INFOPLIST_FILE = "soulprovidr--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -363,8 +324,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "soulprovidr.soulprovider-ios";
+				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
+				PROVISIONING_PROFILE_SPECIFIER = "Soul Provider Provisioning Profile";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -373,66 +335,10 @@
 			};
 			name = Release;
 		};
-		D39175AC27BA307300A0C84F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JWK97SJQ3V;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "soulprovidr.soulprovider-ios";
-				PRODUCT_NAME = "soulprovider-ios";
-				SDKROOT = macosx;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		D39175AD27BA307300A0C84F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JWK97SJQ3V;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "soulprovidr.soulprovider-ios";
-				PRODUCT_NAME = "soulprovider-ios";
-				SDKROOT = macosx;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D391758E27BA307300A0C84F /* Build configuration list for PBXProject "soulprovider-ios" */ = {
+		D391758E27BA307300A0C84F /* Build configuration list for PBXProject "soulprovidr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D39175A627BA307300A0C84F /* Debug */,
@@ -441,20 +347,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D39175A827BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovider-ios (iOS)" */ = {
+		D39175A827BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovidr (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D39175A927BA307300A0C84F /* Debug */,
 				D39175AA27BA307300A0C84F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D39175AB27BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovider-ios (macOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D39175AC27BA307300A0C84F /* Debug */,
-				D39175AD27BA307300A0C84F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
