@@ -12,8 +12,8 @@ struct RadioCoverImageView: View {
 
     var transition: AnyTransition {
         isInitialized
-            ? AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading))
-            : AnyTransition.asymmetric(insertion: AnyTransition.identity, removal: .move(edge: .leading))
+            ? AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading).combined(with: .opacity))
+        : AnyTransition.asymmetric(insertion: AnyTransition.identity, removal: .move(edge: .leading).combined(with: .opacity))
     }
 
     func loadImageFromUrl(url: URL) throws -> UIImage {
@@ -45,7 +45,6 @@ struct RadioCoverImageView: View {
                         }
                     }
             }
-            .animation(.default, value: images.count)
         }
         .onAppear() {
             if let image = try? loadImageFromUrl(url: cover) {
