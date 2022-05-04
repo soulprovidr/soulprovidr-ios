@@ -21,22 +21,19 @@ struct LiveIcon: View {
 }
 
 struct RadioHeaderView: View {
+    var onTapGesture: (() -> Void)?
     var body: some View {
         HStack {
-            HStack {
-                LogoView(size: 32)
-                Text("SOUL PROVIDER")
-                    .font(.system(size: 16, weight: .bold))
-                    .offset(x: 4)
-            }
+                HStack {
+                    LiveIcon(size: 8)
+                        .padding(.trailing, 2)
+                    Text("Live")
+                        .font(.system(size: 24, weight: .semibold))
+                }.frame(alignment: .center)
             Spacer()
-            HStack {
-                LiveIcon(size: 6)
-                    .offset(x: 2)
-                Text("LIVE")
-                    .font(.system(size: 14, weight: .semibold))
-            }.frame(alignment: .center)
+            LogoView(size: 32, onTapGesture: onTapGesture)
         }
+        .padding(.top, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

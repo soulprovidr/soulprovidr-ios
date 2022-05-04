@@ -4,7 +4,10 @@ import SwiftUI
 struct RadioView: View {
     @EnvironmentObject private var metadataFetcher: RadioMetadataFetcher
     @EnvironmentObject private var player: RadioPlayer
+    @EnvironmentObject private var settingsModel: SettingsModel
     @Environment(\.colorScheme) var colorScheme
+    
+    @State private var isPopoverVisible = false
     
     var buttonIcon: String {
         return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
@@ -21,7 +24,9 @@ struct RadioView: View {
     var body: some View {
         VStack {
             if let metadata = metadataFetcher.metadata {
-                RadioHeaderView()
+                RadioHeaderView(onTapGesture: {
+                    isPopoverVisible = true
+                })
                 Spacer()
                 RadioMetadataView(metadata: metadata, status: player.status)
                 RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: player.status)
@@ -35,7 +40,7 @@ struct RadioView: View {
                         .frame(width: 35, height: 35)
                         .padding()
                 }
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                    .foregroundColor(Color("FgColor"))
                     .alert("Couldn't load the stream", isPresented: $player.err) {
                         Button("Try again") {
                             // Do nothing (for now)
@@ -53,6 +58,12 @@ struct RadioView: View {
             }
         }
         .padding()
+        .sheet(isPresented: $isPopoverVisible) {
+            RadioSettingsView(hide: {
+                isPopoverVisible = false
+            })
+            .preferredColorScheme(settingsModel.userColorScheme ?? colorScheme)
+        }
         .background(Color("BgColor"))
         .foregroundColor(Color("FgColor"))
     }
