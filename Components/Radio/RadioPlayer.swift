@@ -3,18 +3,6 @@ import Foundation
 import SwiftUI
 import MediaPlayer
 
-enum RadioError: Error {
-    case metadataError
-    case playbackError
-}
-
-
-enum RadioStatus: String {
-    case stopped
-    case buffering
-    case playing
-}
-
 @MainActor
 class RadioPlayer: ObservableObject {
     private let radioStreamUrl = URL(string: "https://www.radioking.com/play/soulprovidr")

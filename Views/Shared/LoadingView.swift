@@ -2,7 +2,7 @@ import SwiftUI
 
 struct LoadingView: View {
     var err: RadioError? = nil
-    var onTryAgainClick: (() -> Void)? = nil
+    var onTryAgainPress: (() -> Void)? = nil
     var body: some View {
         ZStack {
             VStack {
@@ -25,9 +25,7 @@ struct LoadingView: View {
                     } else {
                         Text("Something went wrong.")
                         Button("Try again") {
-                            if onTryAgainClick != nil {
-                                onTryAgainClick!()
-                            }
+                            onTryAgainPress!()
                         }.offset(y: 10)
                             .foregroundColor(.blue)
                     }
