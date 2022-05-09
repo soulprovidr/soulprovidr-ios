@@ -1,4 +1,4 @@
 enum RadioError: Error {
-    case metadataError
-    case playbackError
+  case metadataError
+  case playbackError
 }
