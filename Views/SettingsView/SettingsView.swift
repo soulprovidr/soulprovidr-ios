@@ -60,7 +60,6 @@ struct SettingsView: View {
           .padding(20)
           .foregroundColor(Color("AccentColor"))
           .onTapGesture {
-            print(settings.colorScheme)
             hide()
           }
       )
