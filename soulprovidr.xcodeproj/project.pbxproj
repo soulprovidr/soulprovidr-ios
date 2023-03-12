@@ -397,7 +397,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -431,7 +431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
 				PROVISIONING_PROFILE_SPECIFIER = "";
