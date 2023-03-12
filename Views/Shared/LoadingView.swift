@@ -9,7 +9,7 @@ struct LoadingView: View {
         Spacer()
         HStack {
           Spacer()
-          LogoView(size: 45, modifier: err == nil ? .classic : .surprised)
+          LogoView(size: 45)
           Text("SOUL PROVIDER")
             .font(.system(size: 22, weight: .bold))
             .offset(x: 7)

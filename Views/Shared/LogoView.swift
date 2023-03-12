@@ -1,22 +1,8 @@
 import SwiftUI
 
-enum LogoModifier {
-  case classic
-  case surprised
-}
-
-func getLogoImage(modifier: LogoModifier) -> String {
-  switch modifier {
-    case .classic:
-      return "SPLogo"
-    case .surprised:
-      return "SPLogoSurprised"
-  }
-}
 
 struct LogoView: View {
   var size: CGFloat = 45
-  var modifier: LogoModifier = .classic
   var onTapGesture: (() -> Void)?
   
   @GestureState private var isBeingTouched = false
@@ -37,7 +23,7 @@ struct LogoView: View {
           isBeingTouched = true
         }
       }
-    Image(getLogoImage(modifier: modifier))
+    Image("SPLogo")
       .resizable()
       .frame(width: size, height: size)
       .clipShape(Circle())
@@ -50,6 +36,5 @@ struct LogoView: View {
 struct LogoView_Previews: PreviewProvider {
   static var previews: some View {
     LogoView()
-    LogoView(modifier: .surprised)
   }
 }
