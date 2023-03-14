@@ -26,27 +26,26 @@ struct RadioView: View {
   }
   
   var listenButton: some View {
-    Button {
-      if player.status == RadioStatus.stopped {
-        player.listen()
-      } else {
-        player.pause()
+    Image(systemName: buttonIcon)
+      .resizable()
+      .scaledToFit()
+      .frame(width: 35, height: 35)
+      .padding()
+      .onTapGesture {
+        if player.status == RadioStatus.stopped {
+          player.listen()
+        } else {
+          player.pause()
+        }
       }
-    } label: {
-      Image(systemName: buttonIcon)
-        .resizable()
-        .scaledToFit()
-        .frame(width: 35, height: 35)
-        .padding()
-    }
-    .foregroundColor(Color("FgColor"))
-    .alert("Couldn't load the stream", isPresented: $player.err) {
-      Button("Try again") {
-        // Do nothing (for now)
+      .foregroundColor(Color("FgColor"))
+      .alert("Couldn't load the stream", isPresented: $player.err) {
+        Button("Try again") {
+          // Do nothing (for now)
+        }
+      } message: {
+        Text("Stay tuned while we resolve the issue.")
       }
-    } message: {
-      Text("Stay tuned while we resolve the issue.")
-    }
   }
   
   var body: some View {
@@ -69,6 +68,7 @@ struct RadioView: View {
         })
       }
     }
+    .frame(maxWidth: 430, maxHeight: 932)
     .padding()
     .sheet(isPresented: $isPopoverVisible) {
       SettingsView(hide: {
