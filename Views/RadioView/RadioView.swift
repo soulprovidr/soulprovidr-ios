@@ -68,6 +68,7 @@ struct RadioView: View {
         })
       }
     }
+    .frame(maxWidth: 430, maxHeight: 932)
     .padding()
     .sheet(isPresented: $isPopoverVisible) {
       SettingsView(hide: {
