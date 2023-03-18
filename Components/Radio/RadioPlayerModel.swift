@@ -3,29 +3,70 @@ import Foundation
 import SwiftUI
 import MediaPlayer
 
-@MainActor
 class RadioPlayerModel: ObservableObject {
-  private let radioStreamUrl = URL(string: "https://www.radioking.com/play/soulprovidr")
+  private let audioURL = URL(string: "https://www.radioking.com/play/soulprovidr")!
   
-  @Published var elapsed: Double = 0.0
-  @Published var err = false
-  @Published var status = RadioStatus.stopped
-  
-  private var audioSession = AVAudioSession.sharedInstance()
-  private var remoteCommandCenter = MPRemoteCommandCenter.shared()
+  private let audioSession = AVAudioSession.sharedInstance()
+  private let remoteCommandCenter = MPRemoteCommandCenter.shared()
   
   private var interruptionObserver: NSObjectProtocol?
   private var statusObserver: NSKeyValueObservation?
   private var timeControlStatusObserver: NSKeyValueObservation?
   
-  private var player: AVPlayer?
+  private let player = AVPlayer()
+  
+  @Published var elapsed: Double = 0.0
+  @Published var err = false
+  @Published var status = RadioStatus.stopped
   
   init() {
     do {
-      try audioSession.setCategory(.playback, mode: .default, options: [.allowAirPlay, .allowBluetooth])
+      try self.audioSession.setCategory(.playback, mode: .default)
     } catch {
       print("Failed to set audio session route sharing policy: \(error)")
     }
+    
+    // Handle interruptions (incoming phone calls, Siri, etc.)
+    NotificationCenter.default.addObserver(
+      forName: AVAudioSession.interruptionNotification,
+      object: self.audioSession,
+      queue: .main
+    ) {
+      [unowned self] notification in
+      self.handleInterruption(notification: notification)
+    }
+    
+    // Handle player errors.
+    self.statusObserver = player.observe(\.status, options: [.new]) { (player, change) in
+      DispatchQueue.main.async { [weak self] in
+        guard let self = self else { return }
+        let status = AVPlayer.Status(rawValue: player.status.rawValue)
+        switch status {
+          case .failed:
+            self.err = true
+          default:
+            self.err = false
+        }
+      }
+    }
+    
+    // Observe and react to changes in player status.
+    self.timeControlStatusObserver = player.observe(\.timeControlStatus, options: [.new]) { (player, change) in
+      DispatchQueue.main.async { [weak self] in
+        guard let self = self else { return }
+        let timeControlStatus = AVPlayer.TimeControlStatus(rawValue: player.timeControlStatus.rawValue)
+        switch timeControlStatus {
+          case .paused:
+            self.status = RadioStatus.stopped
+          case .waitingToPlayAtSpecifiedRate:
+            self.status = RadioStatus.buffering
+          case .playing:
+            self.status = RadioStatus.playing
+          default: ()
+        }
+      }
+    }
+    
     handleRemoteCommands()
   }
   
@@ -61,54 +102,17 @@ class RadioPlayerModel: ObservableObject {
   }
   
   func listen() {
-    // We create a new player each time so we can start listening "live", rather than from the place we paused at.
-    player = AVPlayer(url: radioStreamUrl!)
-    
-    statusObserver = player!.observe(\.status, options: [.new]) { (player, change) in
-      let status = AVPlayer.Status(rawValue: player.status.rawValue)
-      switch (status) {
-        case .failed:
-          self.err = true
-        default:
-          self.err = false
-      }
+    let playerItem = AVPlayerItem(url: audioURL)
+    player.replaceCurrentItem(with: playerItem)
+    do {
+      try self.audioSession.setActive(true)
+      player.play()
+    } catch {
+      print("Failed to activate audio session: \(error)")
     }
-    
-    // Observe and react to changes in player status.
-    timeControlStatusObserver = player!.observe(\.timeControlStatus, options: [.new]) { (player, change) in
-      let timeControlStatus = AVPlayer.TimeControlStatus(rawValue: player.timeControlStatus.rawValue)
-      switch timeControlStatus {
-          // Destroy the player + associated observers when audio is paused.
-        case .paused:
-          self.status = RadioStatus.stopped
-          try? self.audioSession.setActive(false, options: .notifyOthersOnDeactivation)
-          self.player = nil
-          self.interruptionObserver = nil
-          self.timeControlStatusObserver = nil
-          // Set status to 'buffering' when waiting.
-        case .waitingToPlayAtSpecifiedRate:
-          self.status = RadioStatus.buffering
-          // Create observers once audio begins playing.
-        case .playing:
-          self.status = RadioStatus.playing
-          self.interruptionObserver = NotificationCenter.default.addObserver(
-            forName: AVAudioSession.interruptionNotification,
-            object: self.audioSession,
-            queue: .main
-          ) {
-            [unowned self] notification in
-            self.handleInterruption(notification: notification)
-          }
-        default: ()
-      }
-    }
-    
-    // Begin listening.
-    try? audioSession.setActive(true)
-    player!.playImmediately(atRate: 1.0)
   }
   
   func pause() {
-    player!.pause()
+    player.pause()
   }
 }
