@@ -1,6 +1,7 @@
 import Foundation
 import MediaPlayer
 
+@MainActor
 class RadioMetadataFetcherModel: ObservableObject {
   private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
   private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
