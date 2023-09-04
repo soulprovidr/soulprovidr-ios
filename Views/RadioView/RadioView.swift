@@ -58,7 +58,18 @@ struct RadioView: View {
         RadioMetadataView(metadata: metadata, status: player.status)
         RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: player.status)
         Spacer()
-        listenButton
+        HStack {
+          Spacer()
+          DevicePickerView()
+            .frame(width: 30, height: 30)
+          Spacer()
+          listenButton
+          Spacer()
+          Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: 30, height: 30)
+          Spacer()
+        }
         Spacer()
       } else {
         LoadingView(err: metadataFetcher.err, onTryAgainPress: {
