@@ -14,6 +14,7 @@
 		D33FEC9127BCDD7100154E7A /* RadioPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33FEC9027BCDD7100154E7A /* RadioPlayerModel.swift */; };
 		D344D93327E832020069FCFC /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D344D93227E832020069FCFC /* LogoView.swift */; };
 		D344D93527ED8DED0069FCFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D344D93427ED8DED0069FCFC /* LaunchScreen.storyboard */; };
+		D34C73892AA55E3E005EE01E /* DevicePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34C73882AA55E3E005EE01E /* DevicePickerView.swift */; };
 		D39175A427BA307300A0C84F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D391759227BA307300A0C84F /* Assets.xcassets */; };
 		D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175B627BA329C00A0C84F /* SoulProvider.swift */; };
 		D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39175BC27BA32DD00A0C84F /* RadioView.swift */; };
@@ -38,6 +39,7 @@
 		D344D93227E832020069FCFC /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		D344D93427ED8DED0069FCFC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D344D93628034BF60069FCFC /* PRIVACY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIVACY.md; sourceTree = "<group>"; };
+		D34C73882AA55E3E005EE01E /* DevicePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePickerView.swift; sourceTree = "<group>"; };
 		D391759227BA307300A0C84F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D391759727BA307300A0C84F /* Soul Provider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Soul Provider.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D39175B627BA329C00A0C84F /* SoulProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoulProvider.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				D3C8EB9D281F57DC009CE695 /* RadioProgressView.swift */,
 				D3C8EBA4281F590C009CE695 /* RadioHeaderView.swift */,
 				D3C8EBA6281F5AB0009CE695 /* RadioCoverImageView.swift */,
+				D34C73882AA55E3E005EE01E /* DevicePickerView.swift */,
 			);
 			path = RadioView;
 			sourceTree = "<group>";
@@ -195,7 +198,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					D391759627BA307300A0C84F = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -250,6 +253,7 @@
 				D33FCFBF2824A748000D18DD /* SettingsColorScheme.swift in Sources */,
 				D39175BD27BA32DD00A0C84F /* RadioView.swift in Sources */,
 				D3C8EBA7281F5AB0009CE695 /* RadioCoverImageView.swift in Sources */,
+				D34C73892AA55E3E005EE01E /* DevicePickerView.swift in Sources */,
 				D33FEC9127BCDD7100154E7A /* RadioPlayerModel.swift in Sources */,
 				D3C8EB96281F53FF009CE695 /* RadioError.swift in Sources */,
 				D3C8EB9E281F57DC009CE695 /* RadioProgressView.swift in Sources */,
@@ -295,6 +299,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -355,6 +360,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
