@@ -38,8 +38,9 @@ struct SettingsView: View {
       VStack {
         appInformation
         Form {
-          Section() {
-            
+          Section(header: Text("Links")) {
+            Link("Website", destination: URL(string: "https://soulprovidr.fm")!)
+            Link("Privacy Policy", destination: URL(string: "https://soulprovidr.fm/privacy")!)
           }
         }
       }
