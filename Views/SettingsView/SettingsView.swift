@@ -33,21 +33,13 @@ struct SettingsView: View {
     .padding([.top, .bottom], 20)
   }
   
-  var colorSchemePicker: some View {
-    Picker(selection: settings.$colorScheme, label: Text("Appearance")) {
-      Text("System").tag(SettingsColorScheme.system)
-      Text("Dark").tag(SettingsColorScheme.dark)
-      Text("Light").tag(SettingsColorScheme.light)
-    }
-  }
-  
   var body: some View {
     NavigationView {
       VStack {
         appInformation
         Form {
           Section() {
-            colorSchemePicker
+            
           }
         }
       }
