@@ -3,8 +3,6 @@ import Foundation
 import SwiftUI
 
 struct RadioView: View {
-  @Environment(\.colorScheme) private var systemColorScheme: ColorScheme
-
   @EnvironmentObject private var metadataFetcher: RadioMetadataFetcherModel
   @EnvironmentObject private var player: RadioPlayerModel
   @EnvironmentObject private var settings: SettingsModel
@@ -15,19 +13,8 @@ struct RadioView: View {
     return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
   }
 
-  var preferredColorScheme: ColorScheme? {
-    switch settings.colorScheme {
-      case SettingsColorScheme.system:
-        return nil
-      case SettingsColorScheme.dark:
-        return ColorScheme.dark
-      case SettingsColorScheme.light:
-        return ColorScheme.light
-    }
-  }
-
   var devicePickerButton: some View {
-    DevicePickerView(color: UIColor(Color("FgColor")))
+    DevicePickerView()
       .frame(width: 50, height: 50)
   }
   
@@ -90,10 +77,8 @@ struct RadioView: View {
       SettingsView(hide: {
         isPopoverVisible = false
       })
-      .colorScheme(preferredColorScheme ?? systemColorScheme)
     }
     .background(Color("BgColor"))
     .foregroundColor(Color("FgColor"))
-    .preferredColorScheme(preferredColorScheme)
   }
 }
