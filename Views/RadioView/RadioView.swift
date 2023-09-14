@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import SwiftUI
 
@@ -23,6 +24,11 @@ struct RadioView: View {
       case SettingsColorScheme.light:
         return ColorScheme.light
     }
+  }
+
+  var devicePickerButton: some View {
+    DevicePickerView(color: UIColor(Color("FgColor")))
+      .frame(width: 50, height: 50)
   }
   
   var listenButton: some View {
@@ -58,7 +64,17 @@ struct RadioView: View {
         RadioMetadataView(metadata: metadata, status: player.status)
         RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: player.status)
         Spacer()
-        listenButton
+        HStack {
+          Spacer()
+          devicePickerButton
+          Spacer()
+          listenButton
+          Spacer()
+          Rectangle()
+            .foregroundColor(.clear)
+            .frame(width: 50, height: 50)
+          Spacer()
+        }
         Spacer()
       } else {
         LoadingView(err: metadataFetcher.err, onTryAgainPress: {

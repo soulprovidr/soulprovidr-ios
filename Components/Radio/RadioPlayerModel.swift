@@ -21,7 +21,7 @@ class RadioPlayerModel: ObservableObject {
   
   init() {
     do {
-      try self.audioSession.setCategory(.playback, mode: .default)
+      try self.audioSession.setCategory(.playback, mode: .default, policy: .longFormAudio)
     } catch {
       print("Failed to set audio session route sharing policy: \(error)")
     }
