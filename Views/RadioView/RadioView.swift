@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import SwiftUI
 
@@ -23,6 +24,11 @@ struct RadioView: View {
       case SettingsColorScheme.light:
         return ColorScheme.light
     }
+  }
+
+  var devicePickerButton: some View {
+    DevicePickerView(color: UIColor(Color("FgColor")))
+      .frame(width: 50, height: 50)
   }
   
   var listenButton: some View {
@@ -60,14 +66,13 @@ struct RadioView: View {
         Spacer()
         HStack {
           Spacer()
-          DevicePickerView()
-            .frame(width: 30, height: 30)
+          devicePickerButton
           Spacer()
           listenButton
           Spacer()
           Rectangle()
             .foregroundColor(.clear)
-            .frame(width: 30, height: 30)
+            .frame(width: 50, height: 50)
           Spacer()
         }
         Spacer()

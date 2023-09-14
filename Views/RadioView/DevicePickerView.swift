@@ -2,20 +2,16 @@ import AVKit
 import SwiftUI
 
 struct DevicePickerView: UIViewRepresentable {
-  func updateUIView(_ uiView: UIView, context: Context) {
-    return;
-  }
+  @State var color: UIColor
+
+  let routePickerView = AVRoutePickerView()
   
   func makeUIView(context: Context) -> UIView {
-    let routeDetected = true;
-    
-    let routePickerView = AVRoutePickerView()
-    routePickerView.tintColor = UIColor(Color("FgColor"))
-
-    if !routeDetected {
-      routePickerView.isHidden = true
-    }
-
+    routePickerView.tintColor = self.color
     return routePickerView
+  }
+
+  func updateUIView(_ uiView: UIView, context: Context) {
+    routePickerView.tintColor = self.color
   }
 }
