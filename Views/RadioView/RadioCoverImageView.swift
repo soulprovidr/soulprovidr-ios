@@ -15,10 +15,10 @@ struct RadioCoverImageView: View {
     ? AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading).combined(with: .opacity))
     : AnyTransition.asymmetric(insertion: AnyTransition.identity, removal: .move(edge: .leading).combined(with: .opacity))
   }
-  
-  func loadImageFromUrl(url: URL) throws -> UIImage {
-    if let data = try? Data(contentsOf: url) {
-      return UIImage(data: data)!
+
+  func loadImage(url: URL, action: (UIImage) -> Void) async throws -> Void {
+    if let (data, _) = try? await URLSession.shared.data(from: url) {
+      return action(UIImage(data: data)!)
     }
     throw RadioCoverError.failed
   }
@@ -47,15 +47,20 @@ struct RadioCoverImageView: View {
       }
     }
     .onAppear() {
-      if let image = try? loadImageFromUrl(url: cover) {
-        images.append(image)
+      Task {
+        try? await loadImage(url: cover) { image in
+          images.append(image)
+        }
+        // TODO: handle error (placeholder?)
       }
     }
     .onChange(of: cover) { cover in
-      withAnimation {
-        if let image = try? loadImageFromUrl(url: cover) {
-          images.append(image)
-          images.remove(at: 0)
+      Task {
+        try? await loadImage(url: cover) { image in
+          withAnimation(.easeInOut(duration: 0.3)) {
+            images.append(image)
+            images.remove(at: 0)
+          }
         }
       }
     }
