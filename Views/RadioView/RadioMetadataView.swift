@@ -7,6 +7,9 @@ struct RadioMetadataView: View {
   var body: some View {
     VStack {
       RadioCoverImageView(cover: metadata.cover)
+        .onLongPressGesture {
+          print("long press")
+        }
       HStack {
         VStack {
           Text(metadata.title)

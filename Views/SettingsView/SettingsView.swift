@@ -39,62 +39,43 @@ struct SettingsView: View {
     }
     .padding([.top, .bottom], 20)
   }
+
+  func renderLink(url: String, label: String, imageName: String? = nil) -> some View {
+    Link(destination: URL(string: url)!) {
+      HStack {
+        if imageName != nil {
+          Image(imageName!)
+            .resizable()
+            .cornerRadius(4)
+            .scaledToFit()
+            .frame(width: 20, height: 20)
+        }
+        Text(label)
+      }
+    }
+  }
   
   var body: some View {
     NavigationView {
       VStack {
         appInformation
         Form {
-          Section(header: Text("Links")) {
-            Link(destination: URL(string: "https://soulprovidr.fm")!) {
-              HStack {
-                Image("SPLogo")
-                  .resizable()
-                  .cornerRadius(4)
-                  .scaledToFit()
-                  .frame(width: 20, height: 20)
-                Text("Official Website")
-              }
-            }
-            Link(destination: URL(string: "https://github.com/soulprovidr")!) {
-              HStack {
-                Image("GitHubLogo")
-                  .resizable()
-                  .cornerRadius(4)
-                  .scaledToFit()
-                  .frame(width: 20, height: 20)
-                Text("GitHub")
-              }
-            }
-            Link(destination: URL(string: "https://soundcloud.com/soulprovidr")!) {
-              HStack {
-                Image("SoundCloudLogo")
-                  .resizable()
-                  .cornerRadius(4)
-                  .scaledToFit()
-                  .frame(width: 20, height: 20)
-                Text("SoundCloud")
-              }
-            }
-              Link(destination: URL(string: "https://youtube.com/@soulprovidr")!) {
-                HStack {
-                  Image("YouTubeLogo")
-                    .resizable()
-                    .cornerRadius(4)
-                    .scaledToFit()
-                    .frame(width: 20, height: 20)
-                  Text("YouTube")
-                }
-              }
+          Section() {
+            renderLink(url: "https://soulprovidr.fm", label: "Web Version", imageName: "SPLogo")
+          }
+          Section(header: Text("Social")) {
+            renderLink(url: "https://github.com/soulprovidr", label: "GitHub", imageName: "GitHubLogo")
+            renderLink(url: "https://soundcloud.com/soulprovidr", label: "SoundCloud", imageName: "SoundCloudLogo")
+            renderLink(url: "https://youtube.com/@soulprovidr", label: "YouTube", imageName: "YouTubeLogo")
           }
           Section(header: Text("Legal")) {
-            Link("Privacy Policy", destination: URL(string: "https://soulprovidr.fm/privacy")!)
+            renderLink(url: "https://soulprovidr.fm/privacy", label: "Privacy Policy")
           }
         }
       }
       .background(Color("BgColor"))
       .foregroundColor(Color("FgColor"))
-      .navigationTitle("Settings")
+//      .navigationTitle("Settings")
       .navigationBarTitleDisplayMode(.inline)
       .navigationBarItems(trailing:
         Text("Done")
