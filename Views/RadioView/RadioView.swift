@@ -3,14 +3,13 @@ import Foundation
 import SwiftUI
 
 struct RadioView: View {
-  @EnvironmentObject private var metadataFetcher: RadioMetadataFetcherModel
-  @EnvironmentObject private var player: RadioPlayerModel
-  @EnvironmentObject private var settings: SettingsModel
+  @EnvironmentObject private var metadataModel: RadioMetadataModel
+  @EnvironmentObject private var playerModel: RadioPlayerModel
   
   @State private var isPopoverVisible = false
   
   var buttonIcon: String {
-    return player.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
+    return playerModel.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
   }
 
   var devicePickerButton: some View {
@@ -25,14 +24,14 @@ struct RadioView: View {
       .frame(width: 35, height: 35)
       .padding()
       .onTapGesture {
-        if player.status == RadioStatus.stopped {
-          player.listen()
+        if playerModel.status == RadioStatus.stopped {
+          playerModel.listen()
         } else {
-          player.pause()
+          playerModel.pause()
         }
       }
       .foregroundColor(Color("FgColor"))
-      .alert("Couldn't load the stream", isPresented: $player.err) {
+      .alert("Couldn't load the stream", isPresented: $playerModel.err) {
         Button("Try again") {
           // Do nothing (for now)
         }
@@ -43,13 +42,13 @@ struct RadioView: View {
   
   var body: some View {
     VStack {
-      if let metadata = metadataFetcher.metadata {
+      if let metadata = metadataModel.metadata {
         RadioHeaderView(onTapGesture: {
           isPopoverVisible = true
         })
         Spacer()
-        RadioMetadataView(metadata: metadata, status: player.status)
-        RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: player.status)
+        RadioMetadataView(metadata: metadata, status: playerModel.status)
+        RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: playerModel.status)
         Spacer()
         HStack {
           Spacer()
@@ -64,9 +63,9 @@ struct RadioView: View {
         }
         Spacer()
       } else {
-        LoadingView(err: metadataFetcher.err, onTryAgainPress: {
+        LoadingView(err: metadataModel.err, onTryAgainPress: {
           Task {
-            try? await metadataFetcher.fetch()
+            try? await metadataModel.fetch()
           }
         })
       }

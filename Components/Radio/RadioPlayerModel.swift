@@ -3,6 +3,13 @@ import Foundation
 import SwiftUI
 import MediaPlayer
 
+enum RadioStatus: String {
+  case stopped
+  case buffering
+  case playing
+}
+
+@MainActor
 class RadioPlayerModel: ObservableObject {
   private let audioURL = URL(string: "https://www.radioking.com/play/soulprovidr")!
   
@@ -33,7 +40,9 @@ class RadioPlayerModel: ObservableObject {
       queue: .main
     ) {
       [unowned self] notification in
-      self.handleInterruption(notification: notification)
+      Task { @MainActor in
+        self.handleInterruption(notification: notification)
+      }
     }
     
     // Handle player errors.

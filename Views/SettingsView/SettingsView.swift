@@ -3,8 +3,6 @@ import AVFAudio
 
 struct SettingsView: View {
   var hide: () -> Void
-
-  @EnvironmentObject private var settings: SettingsModel
   
   var versionNumber: String {
     if let text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
