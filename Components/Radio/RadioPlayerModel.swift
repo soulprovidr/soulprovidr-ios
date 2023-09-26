@@ -137,9 +137,16 @@ class RadioPlayerModel: NSObject, ObservableObject, GCKSessionManagerListener, G
   }
 
   private func handleChromecastListen() {
+    let metadata = GCKMediaMetadata()
+    metadata.setString("Soul Provider", forKey: kGCKMetadataKeyTitle)
+    metadata.setString("Internet radio for those who like to groove.", forKey: kGCKMetadataKeySubtitle)
+    metadata.addImage(GCKImage(url: URL(string: "https://soulprovidr.fm/logo.png")!, width: 256, height: 256))
+
     let mediaInfoBuilder = GCKMediaInformationBuilder.init(contentURL: STREAM_URL)
     mediaInfoBuilder.streamType = GCKMediaStreamType.live
     mediaInfoBuilder.contentType = "audio/mp3"
+    mediaInfoBuilder.metadata = metadata
+    
     let mediaInformation = mediaInfoBuilder.build()
     castSessionManager?.currentCastSession?.remoteMediaClient?.loadMedia(mediaInformation)
   }
