@@ -2,12 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CHROMECAST_APP_ID</key>
+	<string>$(CHROMECAST_APP_ID)</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_googlecast._tcp</string>
+		<string>_31B46FD3._googlecast._tcp</string>
+	</array>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Soul Provider uses the local network to discover Cast-enabled devices on your WiFi
+network.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
 	</array>
+	<key>METADATA_URL</key>
+	<string>$(METADATA_URL)</string>
+	<key>STREAM_URL</key>
+	<string>$(STREAM_URL)</string>
 </dict>
 </plist>

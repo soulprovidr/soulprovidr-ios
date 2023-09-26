@@ -1,7 +1,11 @@
 import AVFoundation
 import Foundation
+import GoogleCast
 import SwiftUI
 import MediaPlayer
+
+let CHROMECAST_APP_ID = Bundle.main.infoDictionary?["CHROMECAST_APP_ID"] as! String
+let STREAM_URL = URL(string: Bundle.main.infoDictionary?["STREAM_URL"] as! String)!
 
 enum RadioStatus: String {
   case stopped
@@ -9,96 +13,108 @@ enum RadioStatus: String {
   case playing
 }
 
-@MainActor
-class RadioPlayerModel: ObservableObject {
-  private let audioURL = URL(string: "https://www.radioking.com/play/soulprovidr")!
+class RadioPlayerModel: NSObject, ObservableObject, GCKSessionManagerListener, GCKRemoteMediaClientListener {
   
   private let audioSession = AVAudioSession.sharedInstance()
   private let remoteCommandCenter = MPRemoteCommandCenter.shared()
+  private let player = AVPlayer()
   
-  private var interruptionObserver: NSObjectProtocol?
+  private var castMediaStatusObserver: NSKeyValueObservation?
   private var statusObserver: NSKeyValueObservation?
   private var timeControlStatusObserver: NSKeyValueObservation?
   
-  private let player = AVPlayer()
+  private var castContext: GCKCastContext?
+  private var castSessionManager: GCKSessionManager?
+  private var isChromecastConnected = false
   
-  @Published var elapsed: Double = 0.0
   @Published var err = false
   @Published var status = RadioStatus.stopped
   
-  init() {
+  override init() {
+    super.init()
+
     do {
-      try self.audioSession.setCategory(.playback, mode: .default, policy: .longFormAudio)
+      try audioSession.setCategory(.playback, mode: .default, policy: .longFormAudio)
     } catch {
       print("Failed to set audio session route sharing policy: \(error)")
     }
     
-    // Handle interruptions (incoming phone calls, Siri, etc.)
+    // Initialize Chromecast.
+    let criteria = GCKDiscoveryCriteria(applicationID: CHROMECAST_APP_ID)
+    let options = GCKCastOptions(discoveryCriteria: criteria)
+    GCKCastContext.setSharedInstanceWith(options)
+    castContext = GCKCastContext.sharedInstance()
+    castSessionManager = castContext?.sessionManager
+    castSessionManager?.add(self)
+
+    addInterruptionObserver()
+    addLocalPlayerStatusObserver()
+    addLocalPlayerTimeControlStatusObserver()
+    addRemoteCommandTargets()
+  }
+  
+  // Handle interruptions (incoming phone calls, Siri, etc.)
+  private func addInterruptionObserver() {
     NotificationCenter.default.addObserver(
       forName: AVAudioSession.interruptionNotification,
-      object: self.audioSession,
-      queue: .main
-    ) {
-      [unowned self] notification in
-      Task { @MainActor in
-        self.handleInterruption(notification: notification)
+      object: audioSession,
+      queue: .main) { notification in
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+          return
+        }
+        switch type {
+          case .began:
+            self.pause()
+          case .ended:
+            guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
+            let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+            if options.contains(.shouldResume) {
+              self.listen()
+            }
+          default: ()
+        }
       }
-    }
-    
-    // Handle player errors.
-    self.statusObserver = player.observe(\.status, options: [.new]) { (player, change) in
+  }
+
+  // Handle player errors.
+  private func addLocalPlayerStatusObserver() {
+    statusObserver = player.observe(\.status) { player, _ in
       DispatchQueue.main.async { [weak self] in
         guard let self = self else { return }
         let status = AVPlayer.Status(rawValue: player.status.rawValue)
         switch status {
           case .failed:
-            self.err = true
+            err = true
           default:
-            self.err = false
+            err = false
         }
       }
     }
-    
-    // Observe and react to changes in player status.
-    self.timeControlStatusObserver = player.observe(\.timeControlStatus, options: [.new]) { (player, change) in
+  }
+  
+  // Observe and react to changes in player status.
+  private func addLocalPlayerTimeControlStatusObserver() {
+    timeControlStatusObserver = player.observe(\.timeControlStatus) { player, _ in
       DispatchQueue.main.async { [weak self] in
         guard let self = self else { return }
         let timeControlStatus = AVPlayer.TimeControlStatus(rawValue: player.timeControlStatus.rawValue)
         switch timeControlStatus {
           case .paused:
-            self.status = RadioStatus.stopped
+            status = .stopped
           case .waitingToPlayAtSpecifiedRate:
-            self.status = RadioStatus.buffering
+            status = .buffering
           case .playing:
-            self.status = RadioStatus.playing
+            status = .playing
           default: ()
         }
       }
     }
-    
-    handleRemoteCommands()
   }
   
-  func handleInterruption(notification: Notification) {
-    guard let userInfo = notification.userInfo,
-          let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-          let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-      return
-    }
-    switch type {
-      case .began:
-        pause()
-      case .ended:
-        guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
-        let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-        if options.contains(.shouldResume) {
-          listen()
-        }
-      default: ()
-    }
-  }
-  
-  func handleRemoteCommands() {
+  // Handle incoming remote playback commands.
+  private func addRemoteCommandTargets() {
     UIApplication.shared.beginReceivingRemoteControlEvents()
     remoteCommandCenter.playCommand.addTarget { _ in
       self.listen()
@@ -109,19 +125,88 @@ class RadioPlayerModel: ObservableObject {
       return MPRemoteCommandHandlerStatus.success
     }
   }
-  
-  func listen() {
-    let playerItem = AVPlayerItem(url: audioURL)
+
+  private func handleChromecastConnect() {
+    isChromecastConnected = true
+    castSessionManager?.currentCastSession?.remoteMediaClient?.add(self)
+  }
+
+  private func handleChromecastDisconnect() {
+    isChromecastConnected = false
+    castSessionManager?.currentCastSession?.remoteMediaClient?.remove(self)
+  }
+
+  private func handleChromecastListen() {
+    let mediaInfoBuilder = GCKMediaInformationBuilder.init(contentURL: STREAM_URL)
+    mediaInfoBuilder.streamType = GCKMediaStreamType.live
+    mediaInfoBuilder.contentType = "audio/mp3"
+    let mediaInformation = mediaInfoBuilder.build()
+    castSessionManager?.currentCastSession?.remoteMediaClient?.loadMedia(mediaInformation)
+  }
+
+  private func handleChromecastPause() {
+    castSessionManager?.currentSession?.remoteMediaClient?.stop()
+  }
+
+  private func handleLocalListen() {
+    let playerItem = AVPlayerItem(url: STREAM_URL)
     player.replaceCurrentItem(with: playerItem)
     do {
-      try self.audioSession.setActive(true)
+      try audioSession.setActive(true)
       player.play()
     } catch {
       print("Failed to activate audio session: \(error)")
     }
   }
+
+  private func handleLocalPause() {
+    player.pause()
+  }
+
+  func remoteMediaClient(_ client: GCKRemoteMediaClient, didUpdate mediaStatus: GCKMediaStatus?) {
+    switch mediaStatus?.playerState {
+      case .buffering, .loading:
+        status = RadioStatus.buffering
+      case .playing:
+        status = RadioStatus.playing
+      default:
+        status = RadioStatus.stopped
+    }
+  }
+
+  func sessionManager(_ sessionManager: GCKSessionManager, didStart session: GCKSession) {
+    handleChromecastConnect()
+    if status != .stopped {
+      handleLocalPause()
+      handleChromecastListen()
+    }
+  }
+
+  func sessionManager(_ sessionManager: GCKSessionManager, didResumeSession session: GCKSession) {
+    handleChromecastConnect()
+    handleLocalPause()
+  }
+
+  func sessionManager(_ sessionManager: GCKSessionManager, willEnd session: GCKSession) {
+    handleChromecastDisconnect()
+    if status != .stopped {
+      handleLocalListen()
+    }
+  }
+
+  func listen() {
+    if isChromecastConnected {
+      handleChromecastListen()
+    } else {
+      handleLocalListen()
+    }
+  }
   
   func pause() {
-    player.pause()
+    if isChromecastConnected {
+      handleChromecastPause()
+    } else {
+      handleLocalPause()
+    }
   }
 }

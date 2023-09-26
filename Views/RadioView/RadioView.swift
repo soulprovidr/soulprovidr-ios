@@ -1,5 +1,6 @@
 import AVFoundation
 import Foundation
+import GoogleCast
 import SwiftUI
 
 struct RadioView: View {
@@ -8,29 +9,26 @@ struct RadioView: View {
   
   @State private var isPopoverVisible = false
   
-  var buttonIcon: String {
-    return playerModel.status == RadioStatus.stopped ? "play.fill" : "pause.fill"
+  func handleListenTap() {
+    if playerModel.status == .stopped {
+      playerModel.listen()
+    } else {
+      playerModel.pause()
+    }
   }
 
-  var devicePickerButton: some View {
-    DevicePickerView()
-      .frame(width: 50, height: 50)
+  var buttonIcon: String {
+    return playerModel.status == .stopped ? "play.fill" : "pause.fill"
   }
   
   var listenButton: some View {
     Image(systemName: buttonIcon)
       .resizable()
       .scaledToFit()
+      .foregroundColor(Color("FgColor"))
       .frame(width: 35, height: 35)
       .padding()
-      .onTapGesture {
-        if playerModel.status == RadioStatus.stopped {
-          playerModel.listen()
-        } else {
-          playerModel.pause()
-        }
-      }
-      .foregroundColor(Color("FgColor"))
+      .onTapGesture(perform: handleListenTap)
       .alert("Couldn't load the stream", isPresented: $playerModel.err) {
         Button("Try again") {
           // Do nothing (for now)
@@ -47,17 +45,24 @@ struct RadioView: View {
           isPopoverVisible = true
         })
         Spacer()
-        RadioMetadataView(metadata: metadata, status: playerModel.status)
-        RadioProgressView(duration: metadata.duration, startedAt: metadata.started_at, status: playerModel.status)
+        RadioMetadataView(
+          metadata: metadata,
+          status: playerModel.status
+        )
+        RadioProgressView(
+          duration: metadata.duration,
+          startedAt: metadata.started_at,
+          status: playerModel.status
+        )
         Spacer()
         HStack {
           Spacer()
-          devicePickerButton
+          DevicePickerView()
+            .frame(width: 50, height: 50)
           Spacer()
           listenButton
           Spacer()
-          Rectangle()
-            .foregroundColor(.clear)
+          ChromecastButtonView()
             .frame(width: 50, height: 50)
           Spacer()
         }
@@ -65,7 +70,7 @@ struct RadioView: View {
       } else {
         LoadingView(err: metadataModel.err, onTryAgainPress: {
           Task {
-            try? await metadataModel.fetch()
+            try? await metadataModel.sync()
           }
         })
       }

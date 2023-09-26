@@ -10,7 +10,7 @@ struct RadioProgressView: View {
   let progressTimer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
   
   var progressBarColour: Color {
-    return status == RadioStatus.playing ? Color(UIColor(.blue)) : Color("ProgressBarFgColor")
+    return status == .playing ? Color(UIColor(.blue)) : Color("ProgressBarFgColor")
   }
   
   var progressBarValue: Double {
