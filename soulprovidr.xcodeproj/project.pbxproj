@@ -474,7 +474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				METADATA_URL = "https://api.radioking.io/widget/radio/soulprovidr/track/current";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -555,7 +555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.5.0;
 				METADATA_URL = "https://api.radioking.io/widget/radio/soulprovidr/track/current";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
