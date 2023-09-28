@@ -1,6 +1,8 @@
 import Foundation
 import MediaPlayer
 
+let METADATA_URL = URL(string: Bundle.main.infoDictionary?["METADATA_URL"] as! String)
+
 struct RadioMetadata: Codable {
   var artist: String
   var cover: URL
@@ -21,29 +23,11 @@ extension RadioMetadata: Equatable {
 @MainActor
 class RadioMetadataModel: ObservableObject {
   private let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-  private let radioMetadataUrl = URL(string: "https://api.radioking.io/widget/radio/soulprovidr/track/current")
   
   @Published var err: RadioError? = nil
   @Published var metadata: RadioMetadata? = nil
   
-  func fetch() async throws {
-    do {
-      err = nil
-      let (data, response) = try await URLSession.shared.data(for: URLRequest(url: radioMetadataUrl!))
-      guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw RadioError.metadataError }
-      metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
-      setNowPlayingInfo(metadata: metadata!)
-      scheduleFetch(waitForNextTrack: true)
-    } catch {
-      err = RadioError.metadataError
-      // If this is not the first time we are fetching the metadata, retry shortly.
-      if metadata != nil {
-        scheduleFetch(waitForNextTrack: false)
-      }
-    }
-  }
-  
-  func scheduleFetch(waitForNextTrack: Bool) {
+  private func scheduleSync(waitForNextTrack: Bool) {
     var timeInterval: TimeInterval
     if waitForNextTrack {
       // Fetch metadata when next track starts.
@@ -55,7 +39,7 @@ class RadioMetadataModel: ObservableObject {
     }
     Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
       Task {
-        try? await self.fetch()
+        try? await self.sync()
       }
     }
   }
@@ -81,5 +65,22 @@ class RadioMetadataModel: ObservableObject {
       }
     }
     task.resume()
+  }
+
+  func sync() async throws {
+    do {
+      err = nil
+      let (data, response) = try await URLSession.shared.data(for: URLRequest(url: METADATA_URL!))
+      guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw RadioError.metadataError }
+      metadata = try JSONDecoder().decode(RadioMetadata.self, from: data)
+      setNowPlayingInfo(metadata: metadata!)
+      scheduleSync(waitForNextTrack: true)
+    } catch {
+      err = RadioError.metadataError
+      // If this is not the first time we are fetching the metadata, retry shortly.
+      if metadata != nil {
+        scheduleSync(waitForNextTrack: false)
+      }
+    }
   }
 }

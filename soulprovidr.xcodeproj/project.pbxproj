@@ -23,10 +23,14 @@
 		D3C8EBA3281F58ED009CE695 /* RadioMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8EBA2281F58ED009CE695 /* RadioMetadataView.swift */; };
 		D3C8EBA5281F590C009CE695 /* RadioHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8EBA4281F590C009CE695 /* RadioHeaderView.swift */; };
 		D3C8EBA7281F5AB0009CE695 /* RadioCoverImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C8EBA6281F5AB0009CE695 /* RadioCoverImageView.swift */; };
+		D3E69EB62AB7A0C700EBAAF3 /* ChromecastButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E69EB52AB7A0C700EBAAF3 /* ChromecastButtonView.swift */; };
 		D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */; };
+		DA4A7554FEE42244DBE0EBDA /* Pods_soulprovidr__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEA28CE434749C4AB442D80 /* Pods_soulprovidr__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1FEA28CE434749C4AB442D80 /* Pods_soulprovidr__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_soulprovidr__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DDA205B10B383C8F9915D4B /* Pods-soulprovidr (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soulprovidr (iOS).release.xcconfig"; path = "Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		D30CAAB627E6BD7300FE6E9F /* RadioMetadataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataModel.swift; sourceTree = "<group>"; };
 		D33FCFB328224702000D18DD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D33FEC9027BCDD7100154E7A /* RadioPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayerModel.swift; sourceTree = "<group>"; };
@@ -46,7 +50,10 @@
 		D3C8EBA2281F58ED009CE695 /* RadioMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioMetadataView.swift; sourceTree = "<group>"; };
 		D3C8EBA4281F590C009CE695 /* RadioHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioHeaderView.swift; sourceTree = "<group>"; };
 		D3C8EBA6281F5AB0009CE695 /* RadioCoverImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioCoverImageView.swift; sourceTree = "<group>"; };
+		D3E69EB52AB7A0C700EBAAF3 /* ChromecastButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChromecastButtonView.swift; sourceTree = "<group>"; };
+		D3E69EB72AB7A18700EBAAF3 /* libprotobuf.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libprotobuf.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS16.4.sdk/usr/lib/libprotobuf.tbd; sourceTree = DEVELOPER_DIR; };
 		D3F9E99D27DEEC9800FEEDCD /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E2333D32339D173AA89FF1AE /* Pods-soulprovidr (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-soulprovidr (iOS).debug.xcconfig"; path = "Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +61,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4A7554FEE42244DBE0EBDA /* Pods_soulprovidr__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C1896CBE6B0197424A475CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E2333D32339D173AA89FF1AE /* Pods-soulprovidr (iOS).debug.xcconfig */,
+				7DDA205B10B383C8F9915D4B /* Pods-soulprovidr (iOS).release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		D33FCFBD2824A58B000D18DD /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +88,8 @@
 		D36B459A2AAE7C0700DB513E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3E69EB72AB7A18700EBAAF3 /* libprotobuf.tbd */,
+				1FEA28CE434749C4AB442D80 /* Pods_soulprovidr__iOS_.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,6 +106,7 @@
 				D3B94F5B27C5EE4300BFB119 /* soulprovidr--iOS--Info.plist */,
 				D391759827BA307300A0C84F /* Products */,
 				D36B459A2AAE7C0700DB513E /* Frameworks */,
+				4C1896CBE6B0197424A475CB /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +164,7 @@
 				D3C8EBA4281F590C009CE695 /* RadioHeaderView.swift */,
 				D3C8EBA6281F5AB0009CE695 /* RadioCoverImageView.swift */,
 				D34C73882AA55E3E005EE01E /* DevicePickerView.swift */,
+				D3E69EB52AB7A0C700EBAAF3 /* ChromecastButtonView.swift */,
 			);
 			path = RadioView;
 			sourceTree = "<group>";
@@ -165,9 +186,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D39175A827BA307300A0C84F /* Build configuration list for PBXNativeTarget "soulprovidr (iOS)" */;
 			buildPhases = (
+				998A3822ECA3B7B71C4B14A3 /* [CP] Check Pods Manifest.lock */,
 				D391759327BA307300A0C84F /* Sources */,
 				D391759427BA307300A0C84F /* Frameworks */,
 				D391759527BA307300A0C84F /* Resources */,
+				0F819E5D51FF25A207E15B9D /* [CP] Embed Pods Frameworks */,
+				CCD74ABB2B8A95E7CF0EF64D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,6 +248,65 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0F819E5D51FF25A207E15B9D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		998A3822ECA3B7B71C4B14A3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-soulprovidr (iOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCD74ABB2B8A95E7CF0EF64D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-soulprovidr (iOS)/Pods-soulprovidr (iOS)-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D391759327BA307300A0C84F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -233,6 +316,7 @@
 				D39175B727BA329C00A0C84F /* SoulProvider.swift in Sources */,
 				D3C8EBA0281F5807009CE695 /* ProgressBar.swift in Sources */,
 				D344D93327E832020069FCFC /* LogoView.swift in Sources */,
+				D3E69EB62AB7A0C700EBAAF3 /* ChromecastButtonView.swift in Sources */,
 				D3F9E99E27DEEC9800FEEDCD /* LoadingView.swift in Sources */,
 				D3C8EBA5281F590C009CE695 /* RadioHeaderView.swift in Sources */,
 				D3C8EBA3281F58ED009CE695 /* RadioMetadataView.swift in Sources */,
@@ -366,9 +450,11 @@
 		};
 		D39175A927BA307300A0C84F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2333D32339D173AA89FF1AE /* Pods-soulprovidr (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CHROMECAST_APP_ID = 31B46FD3;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -389,10 +475,51 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4.0;
+				METADATA_URL = "https://api.radioking.io/widget/radio/soulprovidr/track/current";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreBluetooth\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleCast\"",
+					"-framework",
+					"\"MediaAccessibility\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				STREAM_URL = "https://www.radioking.com/play/soulprovidr";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -404,9 +531,11 @@
 		};
 		D39175AA27BA307300A0C84F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DDA205B10B383C8F9915D4B /* Pods-soulprovidr (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CHROMECAST_APP_ID = 31B46FD3;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -427,10 +556,51 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4.0;
+				METADATA_URL = "https://api.radioking.io/widget/radio/soulprovidr/track/current";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreBluetooth\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"GoogleCast\"",
+					"-framework",
+					"\"MediaAccessibility\"",
+					"-framework",
+					"\"MediaPlayer\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = fm.soulprovidr.app;
 				PRODUCT_NAME = "Soul Provider";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
+				STREAM_URL = "https://www.radioking.com/play/soulprovidr";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

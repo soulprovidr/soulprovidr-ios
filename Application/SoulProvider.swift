@@ -1,3 +1,4 @@
+import Combine
 import MediaPlayer
 import SwiftUI
 
@@ -12,7 +13,7 @@ struct SoulProvider: App {
         .environmentObject(metadataModel)
         .environmentObject(playerModel)
         .task {
-          try? await metadataModel.fetch()
+          try? await metadataModel.sync()
         }
     }
   }
