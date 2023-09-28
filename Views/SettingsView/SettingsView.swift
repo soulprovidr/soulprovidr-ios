@@ -47,6 +47,7 @@ struct SettingsView: View {
             .cornerRadius(4)
             .scaledToFit()
             .frame(width: 20, height: 20)
+            .tint(.black)
         }
         Text(label)
       }
@@ -59,9 +60,10 @@ struct SettingsView: View {
         appInformation
         Form {
           Section() {
-            renderLink(url: "https://soulprovidr.fm", label: "Web Version", imageName: "SPLogo")
+            renderLink(url: "https://soulprovidr.fm", label: "Web Version")
           }
-          Section(header: Text("Social")) {
+          Section(header: Text("Connect")) {
+            renderLink(url: "https://open.spotify.com/user/soulprovidr", label: "Spotify", imageName: "SpotifyLogo")
             renderLink(url: "https://github.com/soulprovidr", label: "GitHub", imageName: "GitHubLogo")
             renderLink(url: "https://soundcloud.com/soulprovidr", label: "SoundCloud", imageName: "SoundCloudLogo")
             renderLink(url: "https://youtube.com/@soulprovidr", label: "YouTube", imageName: "YouTubeLogo")
